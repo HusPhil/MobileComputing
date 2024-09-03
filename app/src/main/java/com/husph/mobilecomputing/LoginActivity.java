@@ -36,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
         InitializeComponents();
+        mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     private void btn_login_OnClickEvent() {
