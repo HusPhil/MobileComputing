@@ -2,6 +2,8 @@ package com.husph.mobilecomputing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.husph.mobilecomputing.utils.FormValidation;
+
+import java.text.Normalizer;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView tv_to_login;
     private EditText et_email_register;
     private EditText et_password_register;
+    private EditText et_confirm_password_register;
     private Button btn_register;
 
     @Override
@@ -50,15 +56,41 @@ public class RegisterActivity extends AppCompatActivity {
     private void tv_to_login_OnClickEvent() {
         Toast.makeText(RegisterActivity.this, "Navigate to login", Toast.LENGTH_LONG)
                 .show();
-
-
     }
 
     private void btn_register_OnClickEvent() {
-        final String emailInputText = String.valueOf(et_email_register.getText());
-        final  String passwordInputText = String.valueOf(et_password_register.getText());
 
-        mAuth.createUserWithEmailAndPassword(emailInputText, passwordInputText)
+        final String email = et_email_register.getText().toString().trim();
+        final  String password = et_password_register.getText().toString().trim();
+        final  String confirm_password = et_confirm_password_register.getText().toString().trim();
+
+        FormValidation.FormValidationResult registerFormResult = FormValidation.isRegisterFormValid(
+                email,
+                password,
+                confirm_password
+        );
+
+        String message = "";
+
+        switch (registerFormResult) {
+            case INVALID_EMAIL:
+                message = FormValidation.WarningMessage.INVALID_EMAIL_WARNING.getMessage();
+                return;
+            case INVALID_PASSWORD:
+                message = FormValidation.WarningMessage.INVALID_PASSWORD_WARNING.getMessage();
+                return;
+            case INVALID_CONFIRM_PASSWORD:
+                message = FormValidation.WarningMessage.INVALID_CONFIRM_PASSWORD.getMessage();
+            case INPUT_NULL:
+                me
+        }
+
+        if(!TextUtils.isEmpty(message)) {
+            Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
                     @Override
@@ -67,7 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
 
                             Toast.makeText(RegisterActivity.this, "Created new user successfully.", Toast.LENGTH_LONG)
                                     .show();
@@ -83,7 +114,9 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
+
 
     private void InitializeComponents() {
         tv_to_login = findViewById(R.id.tv_to_login);
@@ -98,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         et_email_register = findViewById(R.id.et_email_register);
         et_password_register = findViewById(R.id.et_password_register);
+        et_confirm_password_register = findViewById(R.id.et_confirm_password_register);
 
         btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(
