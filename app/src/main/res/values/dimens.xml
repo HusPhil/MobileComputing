@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fs_primary_100">32sp</dimen>
+    <dimen name="fs_secondary_100">16sp</dimen>
+    <dimen name="fs_secondary_200">12sp</dimen>
+
+    <dimen name="dps_primary_100">16dp</dimen>
+    <dimen name="dps_secondary_100">10dp</dimen>
+</resources>

@@ -22,12 +22,15 @@ import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
+import com.husph.mobilecomputing.utils.FormValidation;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
     private FirebaseAuth mAuth;
+    private FirebaseAuthUtils firebaseAuthUtils;
 
     private Button btn_login;
     private TextView tv_to_register;
@@ -47,18 +50,29 @@ public class LoginActivity extends AppCompatActivity {
         });
         InitializeComponents();
         mAuth = FirebaseAuth.getInstance();
+        firebaseAuthUtils = new FirebaseAuthUtils(mAuth);
 
+        handleUserLoggedIn();
+    }
 
+    private void handleUserLoggedIn() {
+        if(firebaseAuthUtils.isUserLoggedIn()) {
+
+            Toast.makeText(
+                            LoginActivity.this,
+                            FormValidation.WarningMessage.USER_ALREADY_LOGGED_IN_WARNING.getMessage(),
+                            Toast.LENGTH_LONG
+                    )
+                    .show();
+
+            Intent openMainActivity = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(openMainActivity);
+        }
     }
 
     private void btn_login_OnClickEvent() {
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent openMainActivity = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(openMainActivity);
-            return;
-        }
+        handleUserLoggedIn();
 
         final String emailInputText = String.valueOf(et_email_login.getText());
         final  String passwordInputText = String.valueOf(et_password_login.getText());
@@ -83,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
+
+
 
     private void tv_to_register_OnClickEvent() {
         Toast.makeText(

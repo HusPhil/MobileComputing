@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
 import com.husph.mobilecomputing.utils.FormValidation;
 
 import java.text.Normalizer;
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
     private FirebaseAuth mAuth;
+    private FirebaseAuthUtils firebaseAuthUtils;
 
     private TextView tv_to_login;
     private EditText et_email_register;
@@ -51,11 +53,32 @@ public class RegisterActivity extends AppCompatActivity {
         });
         InitializeComponents();
         mAuth = FirebaseAuth.getInstance();
+        firebaseAuthUtils = new FirebaseAuthUtils(mAuth);
+
+        if(firebaseAuthUtils.isUserLoggedIn()) {
+
+            Toast.makeText(
+                    RegisterActivity.this,
+                    FormValidation.WarningMessage.USER_ALREADY_LOGGED_IN_WARNING.getMessage(),
+                    Toast.LENGTH_LONG
+                )
+                .show();
+
+            Intent openMainActivity = new Intent(RegisterActivity.this, MainActivity.class);
+            startActivity(openMainActivity);
+        }
+
     }
 
     private void tv_to_login_OnClickEvent() {
         Toast.makeText(RegisterActivity.this, "Navigate to login", Toast.LENGTH_LONG)
                 .show();
+        navigateToLoginScreen();
+    }
+
+    private void navigateToLoginScreen() {
+        Intent openLoginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(openLoginActivity);
     }
 
     private void btn_register_OnClickEvent() {
@@ -99,25 +122,30 @@ public class RegisterActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.i(TAG, "RESULT REGISTER: " + task.getResult());
-                        if (task.isSuccessful()) {
+                        try {
+                            Log.i(TAG, "RESULT REGISTER: " + task.getResult());
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
 
+                                String message = "Success, email: " + user.getEmail();
 
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG)
+                                        .show();
 
-                            Toast.makeText(RegisterActivity.this, "Created new user successfully.", Toast.LENGTH_LONG)
-                                    .show();
+                                navigateToLoginScreen();
 
-                            Intent openMainActivity = new Intent(RegisterActivity.this, MainActivity.class);
-                            startActivity(openMainActivity);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                        catch(Exception e) {
+                            Log.e(TAG, "An error occurred while trying to create a user");
+                            Toast.makeText(RegisterActivity.this, FormValidation.WarningMessage.INVALID_EMAIL_WARNING.getMessage(),
                                     Toast.LENGTH_SHORT).show();
-
                         }
                     }
                 });

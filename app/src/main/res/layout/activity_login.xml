@@ -1,103 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-  <LinearLayout
-      android:id="@+id/ll_input_container"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:gravity="center"
-      android:orientation="vertical"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:id="@+id/ll_input_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_launcher_background"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_login_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-      <TextView
-          android:id="@+id/tv_login_title"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:text="Log In"
-          android:textSize="32dp" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_input_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        app:cardBackgroundColor="@color/design_default_color_error"
-        app:cardCornerRadius="5dp">
-
-      <LinearLayout
-          android:id="@+id/ll_login_root"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_login_email_label"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@id/et_email_login"
-            android:text="E-mail" />
+            android:layout_margin="@dimen/dps_secondary_100"
+            android:background="@color/white"
+            app:cardCornerRadius="@dimen/fs_secondary_100"
+            app:contentPadding="@dimen/dps_secondary_100">
 
-        <EditText
-            android:id="@+id/et_email_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:hint="ex: john@doe.gmail.com"
-            android:inputType="textEmailAddress"
-            android:selectAllOnFocus="false"
-            android:singleLine="true" />
 
-        <TextView
-            android:id="@+id/tv_login_password_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:labelFor="@id/et_password_login"
-            android:text="Password" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
 
-        <EditText
-            android:id="@+id/et_password_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="ex: my_strong_password"
-            android:inputType="textPassword" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:text="Log In"
+                    android:textSize="@dimen/fs_primary_100" />
 
-      </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="@dimen/fs_secondary_100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dps_secondary_100"
+                    android:background="@color/white"
+                    app:contentPadding="@dimen/dps_secondary_100">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log in" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins"
+                            android:text="Email address"
+                            android:labelFor="@id/et_email_login"
+                            android:textSize="@dimen/fs_secondary_100" />
 
-    <TextView
-        android:id="@+id/tv_to_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="No account yet? Click here!" />
+                        <EditText
+                            android:id="@+id/et_email_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:autofillHints="emailAddress"
+                            android:hint="john@doe.gmail.com"
+                            android:inputType="textEmailAddress" />
 
-  </LinearLayout>
+                    </LinearLayout>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="@dimen/fs_secondary_100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dps_secondary_100"
+                    android:background="@color/white"
+                    app:contentPadding="@dimen/dps_secondary_100">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins"
+                            android:text="Password"
+                            android:labelFor="@id/et_password_login"
+                            android:textSize="@dimen/fs_secondary_100" />
+
+
+                        <EditText
+                            android:id="@+id/et_password_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:autofillHints="emailAddress"
+                            android:inputType="textPassword"
+                            android:hint="myStrongPassword123"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dps_secondary_100"
+                    android:text="Submit"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="auto"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:labelFor="@id/et_password_login"
+                    android:text="No account yet? Register here!"
+                    android:textSize="@dimen/fs_secondary_200"
+                    android:layout_marginHorizontal="@dimen/dps_secondary_100"/>
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
