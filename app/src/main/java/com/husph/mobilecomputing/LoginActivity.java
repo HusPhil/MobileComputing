@@ -2,6 +2,7 @@ package com.husph.mobilecomputing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -74,10 +75,35 @@ public class LoginActivity extends AppCompatActivity {
 
         handleUserLoggedIn();
 
-        final String emailInputText = String.valueOf(et_email_login.getText());
-        final  String passwordInputText = String.valueOf(et_password_login.getText());
+        final String email = et_email_login.getText().toString().trim();
+        final  String password = et_password_login.getText().toString().trim();
 
-        mAuth.signInWithEmailAndPassword(emailInputText, passwordInputText)
+        FormValidation.FormValidationResult loginFormResult = FormValidation.isLoginFormValid(
+                email,
+                password
+        );
+
+        String message = "";
+
+        switch (loginFormResult) {
+            case INVALID_EMAIL:
+                message = FormValidation.WarningMessage.INVALID_EMAIL_WARNING.getMessage();
+                break;
+            case INVALID_PASSWORD:
+                message = FormValidation.WarningMessage.INVALID_PASSWORD_WARNING.getMessage();
+                break;
+            case INPUT_NULL:
+                message = FormValidation.WarningMessage.INPUT_NULL_WARNING.getMessage();
+                break;
+        }
+
+        if(!TextUtils.isEmpty(message)) {
+            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

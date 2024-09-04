@@ -66,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             Intent openMainActivity = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(openMainActivity);
+            finish();
         }
 
     }
@@ -79,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void navigateToLoginScreen() {
         Intent openLoginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(openLoginActivity);
+        finish();
     }
 
     private void btn_register_OnClickEvent() {

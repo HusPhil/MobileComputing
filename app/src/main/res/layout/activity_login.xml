@@ -11,7 +11,7 @@
         android:id="@+id/ll_input_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/ic_launcher_background"
+        android:background="@color/material_dynamic_neutral80"
         android:gravity="bottom"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,10 +19,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="Login person icon"
+            app:srcCompat="@drawable/ic_person_form" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dps_secondary_100"
+            android:layout_marginLeft="@dimen/dps_primary_100"
+            android:layout_marginRight="@dimen/dps_primary_100"
+            android:layout_marginBottom="@dimen/margin_large"
             android:background="@color/white"
             app:cardCornerRadius="@dimen/fs_secondary_100"
             app:contentPadding="@dimen/dps_secondary_100">
@@ -31,8 +40,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -44,32 +52,33 @@
                     android:textSize="@dimen/fs_primary_100" />
 
                 <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="@dimen/fs_secondary_100"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dps_secondary_100"
                     android:background="@color/white"
+                    app:cardCornerRadius="@dimen/fs_secondary_100"
                     app:contentPadding="@dimen/dps_secondary_100">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppins"
-                            android:text="Email address"
                             android:labelFor="@id/et_email_login"
-                            android:textSize="@dimen/fs_secondary_100" />
+                            android:text="Email address"
+                            android:textSize="@dimen/fs_secondary_200" />
 
                         <EditText
                             android:id="@+id/et_email_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
                             android:autofillHints="emailAddress"
+                            android:fontFamily="@font/poppins"
+                            android:textSize="@dimen/fs_secondary_100"
                             android:hint="john@doe.gmail.com"
                             android:inputType="textEmailAddress" />
 
@@ -78,35 +87,36 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="@dimen/fs_secondary_100"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dps_secondary_100"
                     android:background="@color/white"
+                    app:cardCornerRadius="@dimen/fs_secondary_100"
                     app:contentPadding="@dimen/dps_secondary_100">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppins"
-                            android:text="Password"
                             android:labelFor="@id/et_password_login"
-                            android:textSize="@dimen/fs_secondary_100" />
+                            android:text="Password"
+                            android:textSize="@dimen/fs_secondary_200" />
 
 
                         <EditText
                             android:id="@+id/et_password_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
                             android:autofillHints="emailAddress"
+                            android:fontFamily="@font/poppins"
+                            android:hint="myStrongPassword123"
                             android:inputType="textPassword"
-                            android:hint="myStrongPassword123"/>
+                            android:textSize="@dimen/fs_secondary_100" />
 
                     </LinearLayout>
 
@@ -117,19 +127,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dps_secondary_100"
-                    android:text="Submit"/>
+                    android:text="Submit" />
 
                 <TextView
+                    android:id="@+id/tv_to_register"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/dps_secondary_100"
                     android:clickable="true"
                     android:focusable="auto"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:labelFor="@id/et_password_login"
                     android:text="No account yet? Register here!"
-                    android:textSize="@dimen/fs_secondary_200"
-                    android:layout_marginHorizontal="@dimen/dps_secondary_100"/>
+                    android:textSize="@dimen/fs_secondary_200" />
 
             </LinearLayout>
 
