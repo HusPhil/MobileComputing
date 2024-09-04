@@ -75,27 +75,34 @@ public class RegisterActivity extends AppCompatActivity {
         switch (registerFormResult) {
             case INVALID_EMAIL:
                 message = FormValidation.WarningMessage.INVALID_EMAIL_WARNING.getMessage();
-                return;
+                break;
             case INVALID_PASSWORD:
                 message = FormValidation.WarningMessage.INVALID_PASSWORD_WARNING.getMessage();
-                return;
+                break;
             case INVALID_CONFIRM_PASSWORD:
                 message = FormValidation.WarningMessage.INVALID_CONFIRM_PASSWORD.getMessage();
+                break;
             case INPUT_NULL:
-                me
+                message = FormValidation.WarningMessage.INPUT_NULL_WARNING.getMessage();
+                break;
         }
 
         if(!TextUtils.isEmpty(message)) {
             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT)
                     .show();
+            return;
         }
+
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.i(TAG, "RESULT REGISTER: " + task.getResult());
                         if (task.isSuccessful()) {
+
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
