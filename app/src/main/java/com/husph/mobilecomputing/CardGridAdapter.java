@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.husph.mobilecomputing.models.LetterCard;
+import com.husph.mobilecomputing.utils.Constants;
 
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class CardGridAdapter extends RecyclerView.Adapter<CardGridAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //render item
 
-        final int cardWidth = parent.getWidth() / 2;
-        final int cardHeight = parent.getHeight() / (letterCards.size() / 2);
+        final int cardWidth = parent.getWidth() / Constants.CARD_GRID_COLUMN;
+        final int cardHeight = parent.getHeight() / (letterCards.size() / Constants.CARD_GRID_COLUMN);
         final int cardSideLength = Math.min(cardWidth, cardHeight) - (2 * MARGIN_SIZE);
 
         View itemView = LayoutInflater.from(context)

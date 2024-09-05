@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.husph.mobilecomputing.models.LetterCard;
+import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.FormValidation;
 
 import java.util.ArrayList;
@@ -44,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        setupCardGrid();
         mAuth = FirebaseAuth.getInstance();
-
         handleUserNotLoggedIn();
 
-        setupCardGrid();
+
 
     }
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         // set up the rv_grid
         rv_card_grid.setAdapter(cardGridAdapter);
         rv_card_grid.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, Constants.CARD_GRID_COLUMN);
 
         rv_card_grid.setLayoutManager(gridLayoutManager);
     }
@@ -97,29 +98,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private String arrangeLetters(String word) {
+        //to arrnge letter for grid layout
+        // HELLOWORLD -> HWEOLRLLOD
+
+        int length = word.length();
+        int mid = length / Constants.CARD_GRID_COLUMN;
+
+
+        String firstHalf = word.substring(0, mid);
+        String secondHalf = word.substring(mid);
+
+        StringBuilder rearrangedLetters = new StringBuilder();
+
+        for (int i = 0; i < mid; i++) {
+            rearrangedLetters.append(firstHalf.charAt(i));
+            rearrangedLetters.append(secondHalf.charAt(i));
+        }
+
+
+        return rearrangedLetters.toString();
+    }
+
     private List<LetterCard> getLetterCards(String word) {
 
         final List<LetterCard> letterCards = new ArrayList<>();
-        final char[] wordAsCharArr = word.toCharArray();
-        final int column = 2;
+
+        final String reArrangdeLetters = arrangeLetters(word);
+
+        final char[] wordAsCharArr = reArrangdeLetters.toCharArray();
+
         for (char letter : wordAsCharArr) {
             letterCards.add(new LetterCard(Character.toString(letter)));
         }
-
-//        for (int i = 0; i < wordAsCharArr.length; i++) {
-//            String letter = Character.toString(wordAsCharArr[i]);
-//            if((i + 1) % 2 == 0) {
-//                // [0,1,2,3]
-//                int halfIndex = wordAsCharArr.length / 2;
-//                letter = Character.toString(wordAsCharArr[halfIndex + i - 1]);
-//                letterCards.add(new LetterCard(letter));
-//                continue;
-//            }
-//
-//            letterCards.add(new LetterCard(letter));
-//        }
-//
-////        List<LetterCard> rearrangedLetterCards = new ArrayList<>();
 
         return letterCards;
     }
