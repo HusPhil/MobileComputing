@@ -64,8 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
                 )
                 .show();
 
-            Intent openMainActivity = new Intent(RegisterActivity.this, MainActivity.class);
-            startActivity(openMainActivity);
             finish();
         }
 
@@ -80,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void navigateToLoginScreen() {
         Intent openLoginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(openLoginActivity);
-        finish();
+
     }
 
     private void btn_register_OnClickEvent() {
@@ -134,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG)
                                         .show();
 
-                                navigateToLoginScreen();
+                                finish();
 
                             } else {
                                 // If sign in fails, display a message to the user.

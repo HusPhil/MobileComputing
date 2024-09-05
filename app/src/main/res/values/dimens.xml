@@ -3,8 +3,11 @@
     <dimen name="fs_primary_100">30sp</dimen>
     <dimen name="fs_secondary_100">14sp</dimen>
     <dimen name="fs_secondary_200">12sp</dimen>
+    <dimen name="fs_letter_card">64sp</dimen>
 
     <dimen name="margin_large">42dp</dimen>
+
+
 
     <dimen name="dps_primary_100">32dp</dimen>
     <dimen name="dps_primary_200">16dp</dimen>

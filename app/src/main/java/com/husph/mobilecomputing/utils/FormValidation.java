@@ -9,7 +9,8 @@ import java.security.SecureRandom;
 public class FormValidation {
 
     public enum WarningMessage {
-        USER_ALREADY_LOGGED_IN_WARNING("Welcome back!"),
+        USER_ALREADY_LOGGED_IN_WARNING("You are already logged in!"),
+        USER_NOT_LOGGED_IN_WARNING("Please log in first."),
         INPUT_NULL_WARNING("Please fill up required fields."),
         INVALID_EMAIL_WARNING("Invalid email, please try another one."),
         INVALID_PASSWORD_WARNING("Password must contain 8 or more characters."),

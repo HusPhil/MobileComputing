@@ -53,6 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthUtils = new FirebaseAuthUtils(mAuth);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         handleUserLoggedIn();
     }
 
@@ -60,14 +65,12 @@ public class LoginActivity extends AppCompatActivity {
         if(firebaseAuthUtils.isUserLoggedIn()) {
 
             Toast.makeText(
-                            LoginActivity.this,
-                            FormValidation.WarningMessage.USER_ALREADY_LOGGED_IN_WARNING.getMessage(),
-                            Toast.LENGTH_LONG
-                    )
-                    .show();
-
-            Intent openMainActivity = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(openMainActivity);
+                    LoginActivity.this,
+                    FormValidation.WarningMessage.USER_ALREADY_LOGGED_IN_WARNING.getMessage(),
+                    Toast.LENGTH_LONG
+            )
+            .show();
+            finish();
         }
     }
 
@@ -111,8 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent openMainActivity = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(openMainActivity);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -123,8 +125,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
-
-
 
     private void tv_to_register_OnClickEvent() {
         Toast.makeText(
