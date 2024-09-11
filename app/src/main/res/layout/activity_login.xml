@@ -54,92 +54,73 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dps_secondary_100"
+                    android:layout_marginHorizontal="@dimen/fs_secondary_100"
                     android:background="@color/white"
                     app:cardCornerRadius="@dimen/fs_secondary_100"
                     app:contentPadding="@dimen/dps_secondary_100">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-                        <TextView
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_email_login"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppins"
-                            android:labelFor="@id/et_email_login"
-                            android:text="Email address"
-                            android:textSize="@dimen/fs_secondary_200" />
-
-                        <EditText
-                            android:id="@+id/et_email_login"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="emailAddress"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="@dimen/fs_secondary_100"
-                            android:hint="john@doe.gmail.com"
-                            android:inputType="textEmailAddress" />
-
-                    </LinearLayout>
+                            android:hint="Email"
+                            android:inputType="textEmailAddress"
+                            android:textSize="@dimen/fs_secondary_100" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dps_secondary_100"
+                    android:layout_marginHorizontal="@dimen/fs_secondary_100"
+                    android:layout_marginTop="@dimen/padding_small"
                     android:background="@color/white"
                     app:cardCornerRadius="@dimen/fs_secondary_100"
                     app:contentPadding="@dimen/dps_secondary_100">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-                        <TextView
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_password_login"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/poppins"
-                            android:labelFor="@id/et_password_login"
-                            android:text="Password"
-                            android:textSize="@dimen/fs_secondary_200" />
-
-
-                        <EditText
-                            android:id="@+id/et_password_login"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="emailAddress"
-                            android:fontFamily="@font/poppins"
-                            android:hint="myStrongPassword123"
+                            android:hint="Password"
                             android:inputType="textPassword"
                             android:textSize="@dimen/fs_secondary_100" />
-
-                    </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.cardview.widget.CardView>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dps_secondary_100"
+                    android:gravity="center"
+                    android:fontFamily="@font/poppins"
                     android:text="Submit" />
 
                 <TextView
                     android:id="@+id/tv_to_register"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dps_secondary_100"
                     android:clickable="true"
+                    android:padding="@dimen/dps_primary_100"
                     android:focusable="auto"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
-                    android:labelFor="@id/et_password_login"
-                    android:text="No account yet? Register here!"
+                    android:labelFor="@id/et_password_register"
+                    android:text="No account yet? Register!"
                     android:textSize="@dimen/fs_secondary_200" />
 
             </LinearLayout>

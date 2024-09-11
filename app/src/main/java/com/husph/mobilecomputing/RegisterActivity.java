@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.husph.mobilecomputing.utils.DetailsActivity;
 import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
 import com.husph.mobilecomputing.utils.FormValidation;
 
@@ -72,13 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void tv_to_login_OnClickEvent() {
         Toast.makeText(RegisterActivity.this, "Navigate to login", Toast.LENGTH_LONG)
                 .show();
-        navigateToLoginScreen();
-    }
-
-    private void navigateToLoginScreen() {
-        Intent openLoginActivity = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(openLoginActivity);
-
+        finish();
     }
 
     private void btn_register_OnClickEvent() {
@@ -129,11 +124,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 String message = "Success, email: " + user.getEmail();
 
-                                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG)
-                                        .show();
+                                Toast.makeText(
+                            RegisterActivity.this,
+                                    message,
+                                    Toast.LENGTH_LONG
+                                )
+                                .show();
 
+                                navigateToDetails();
                                 finish();
-
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -152,7 +151,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
+    private void navigateToDetails() {
+        Intent openDetailsActivity = new Intent(RegisterActivity.this, DetailsActivity.class);
+        startActivity(openDetailsActivity);
+    }
     private void InitializeComponents() {
         tv_to_login = findViewById(R.id.tv_to_login);
         tv_to_login.setOnClickListener(

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.husph.mobilecomputing.models.LetterCard;
 import com.husph.mobilecomputing.utils.Constants;
+import com.husph.mobilecomputing.utils.DetailsActivity;
 import com.husph.mobilecomputing.utils.FormValidation;
 
 import java.util.ArrayList;
@@ -47,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
         });
         setupCardGrid();
         mAuth = FirebaseAuth.getInstance();
+        Intent openDetailsActivity = new Intent(MainActivity.this, DetailsActivity.class);
+        startActivity(openDetailsActivity);
         handleUserNotLoggedIn();
-
-
-
     }
 
     private void setupCardGrid() {
@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
             )
             .show();
 
-            Intent openMainActivity = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(openMainActivity);
+            Intent openLoginActivity = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(openLoginActivity);
         }
     }
 
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
         letterCard.setIsFaceUp(!letterCard.getIsFaceUp());
         cardGridAdapter.notifyItemChanged(position);
-
     }
 
     private String arrangeLetters(String word) {

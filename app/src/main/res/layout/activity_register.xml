@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:contentDescription="Login person icon"
-            app:srcCompat="@drawable/ic_person_form" />
+            app:srcCompat="@drawable/ic_person_form"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -59,30 +59,19 @@
                     app:cardCornerRadius="@dimen/fs_secondary_100"
                     app:contentPadding="@dimen/dps_secondary_100">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/poppins"
-                            android:labelFor="@id/et_email_register"
-                            android:text="Email address"
-                            android:textSize="@dimen/fs_secondary_200" />
-
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_email_register"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="emailAddress"
-                            android:fontFamily="@font/poppins"
+                            android:layout_height="match_parent"
+                            android:inputType="textEmailAddress"
                             android:textSize="@dimen/fs_secondary_100"
-                            android:hint="john@doe.gmail.com"
-                            android:inputType="textEmailAddress" />
-
-                    </LinearLayout>
+                            android:fontFamily="@font/poppins"
+                            android:hint="Email" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -99,44 +88,32 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/poppins"
-                            android:labelFor="@id/et_password_register"
-                            android:text="Password"
-                            android:textSize="@dimen/fs_secondary_200" />
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_password_register"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textPassword"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="@dimen/fs_secondary_100"
+                                android:hint="Password" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-
-                        <EditText
-                            android:id="@+id/et_password_register"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="emailAddress"
-                            android:fontFamily="@font/poppins"
-                            android:hint="myStrongPassword123"
-                            android:inputType="textPassword"
-                            android:textSize="@dimen/fs_secondary_100" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/poppins"
-                            android:layout_marginTop="@dimen/dps_secondary_100"
-                            android:labelFor="@id/et_confirm_password_register"
-                            android:text="Confirm password"
-                            android:textSize="@dimen/fs_secondary_200" />
-
-
-                        <EditText
-                            android:id="@+id/et_confirm_password_register"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints="emailAddress"
-                            android:fontFamily="@font/poppins"
-                            android:hint="myStrongPassword123"
-                            android:inputType="textPassword"
-                            android:textSize="@dimen/fs_secondary_100" />
+                            android:layout_marginTop="@dimen/dps_primary_200">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_confirm_password_register"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="textPassword"
+                                android:fontFamily="@font/poppins"
+                                android:textSize="@dimen/fs_secondary_100"
+                                android:hint="Confirm password" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
@@ -147,6 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dps_secondary_100"
+                    android:fontFamily="@font/poppins"
                     android:text="Submit" />
 
                 <TextView
@@ -160,7 +138,8 @@
                     android:gravity="center"
                     android:labelFor="@id/et_password_register"
                     android:text="Have an account already? Log in!"
-                    android:textSize="@dimen/fs_secondary_200" />
+                    android:textSize="@dimen/fs_secondary_200"
+                    android:padding="@dimen/dps_primary_100"/>
 
             </LinearLayout>
 
