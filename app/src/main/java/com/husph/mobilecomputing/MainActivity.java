@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         });
         setupCardGrid();
         mAuth = FirebaseAuth.getInstance();
-        Intent openDetailsActivity = new Intent(MainActivity.this, DetailsActivity.class);
-        startActivity(openDetailsActivity);
         handleUserNotLoggedIn();
     }
 

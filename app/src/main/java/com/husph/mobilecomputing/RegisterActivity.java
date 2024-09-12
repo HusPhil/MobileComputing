@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.DetailsActivity;
 import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
 import com.husph.mobilecomputing.utils.FormValidation;
@@ -122,6 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
 
+
                                 String message = "Success, email: " + user.getEmail();
 
                                 Toast.makeText(
@@ -131,7 +133,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 )
                                 .show();
 
-                                navigateToDetails();
+                                navigateToDetails(user);
+                                mAuth.signOut();
+
                                 finish();
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -151,8 +155,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void navigateToDetails() {
+    private void navigateToDetails(FirebaseUser userToLogin) {
         Intent openDetailsActivity = new Intent(RegisterActivity.this, DetailsActivity.class);
+        openDetailsActivity.putExtra(Constants.PASSKEY_FirebaseUser, userToLogin);
         startActivity(openDetailsActivity);
     }
     private void InitializeComponents() {

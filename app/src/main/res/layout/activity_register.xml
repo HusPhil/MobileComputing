@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dps_secondary_100"
                     android:fontFamily="@font/poppins"
-                    android:text="Submit" />
+                    android:text="Continue" />
 
                 <TextView
                     android:id="@+id/tv_to_login"

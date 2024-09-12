@@ -1,20 +1,31 @@
 package com.husph.mobilecomputing.utils;
 
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.Contract;
 
 import java.security.SecureRandom;
+import java.util.Set;
 
 public class FormValidation {
 
     public enum WarningMessage {
+        INVALID_USERNAME("Invalid username"),
+        INVALID_PHONE_NUMBER("Invalid phone number"),
+        INVALID_COUNTRY("Invalid country"),
+        INVALID_STATE("Invalid state"),
+        INVALID_GENDER("Invalid gender"),
+        INVALID_BIRTH_DATE("Invalid birth date"),
+        INVALID_BIRTH_TIME("Invalid birth time"),
+        INVALID_INTERESTS("Invalid interests"),
         USER_ALREADY_LOGGED_IN_WARNING("You are already logged in!"),
         USER_NOT_LOGGED_IN_WARNING("Please log in first."),
         INPUT_NULL_WARNING("Please fill up required fields."),
         INVALID_EMAIL_WARNING("Invalid email, please try another one."),
         INVALID_PASSWORD_WARNING("Password must contain 8 or more characters."),
         INVALID_CONFIRM_PASSWORD("Passwords do not match, try again");
+
 
         private final String message;
 
@@ -32,7 +43,15 @@ public class FormValidation {
         INVALID_EMAIL,
         INVALID_CONFIRM_PASSWORD,
         INVALID_PASSWORD,
-        FORM_VALID
+        FORM_VALID,
+        INVALID_USERNAME,
+        INVALID_PHONE_NUMBER,
+        INVALID_COUNTRY,
+        INVALID_STATE,
+        INVALID_GENDER,
+        INVALID_BIRTH_DATE,
+        INVALID_BIRTH_TIME,
+        INVALID_INTERESTS,
     }
 
 
@@ -55,6 +74,24 @@ public class FormValidation {
         if(!isValidPassword(password)) return FormValidationResult.INVALID_PASSWORD;
 
         if(!password.equals(confirm_password)) return FormValidationResult.INVALID_CONFIRM_PASSWORD;
+
+        return FormValidationResult.FORM_VALID;
+    }
+
+    public static FormValidationResult isDetailsFormValid(String username, String phoneNumber, String country, String gender, String birthDate, String birthTime, String interests, Set<String> countries) {
+        if(TextUtils.isEmpty(username) || username.length() < 3) return FormValidationResult.INVALID_USERNAME;
+
+        if(TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 11) return FormValidationResult.INVALID_PHONE_NUMBER;
+
+        if(TextUtils.isEmpty(country) || !countries.contains(country)) return FormValidationResult.INVALID_COUNTRY;
+
+        if(TextUtils.isEmpty(gender)) return FormValidationResult.INVALID_GENDER;
+
+        if(TextUtils.isEmpty(birthDate)) return FormValidationResult.INVALID_BIRTH_DATE;
+
+        if(TextUtils.isEmpty(birthDate)) return FormValidationResult.INVALID_BIRTH_TIME;
+
+        if(TextUtils.isEmpty(interests)) return FormValidationResult.INVALID_INTERESTS;
 
         return FormValidationResult.FORM_VALID;
     }
