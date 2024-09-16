@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -30,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.husph.mobilecomputing.models.LetterCard;
 import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
-import com.husph.mobilecomputing.utils.DetailsActivity;
 import com.husph.mobilecomputing.utils.FormValidation;
 
 import java.util.ArrayList;

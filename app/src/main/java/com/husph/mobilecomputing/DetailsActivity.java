@@ -1,7 +1,8 @@
-package com.husph.mobilecomputing.utils;
+package com.husph.mobilecomputing;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,9 +10,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,13 +32,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.husph.mobilecomputing.R;
+import com.husph.mobilecomputing.utils.Constants;
+import com.husph.mobilecomputing.utils.FormValidation;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -44,6 +49,7 @@ public class DetailsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference usersRef;
+    Dialog loadingDialog;
 
 
     private final String[] philippinesProvinces = {
@@ -72,6 +78,7 @@ public class DetailsActivity extends AppCompatActivity {
     private ImageButton btn_pickBirthDate;
     private ImageButton btn_pickBirthTime;
     private Button btn_finish_register;
+    private Button btn_goBack;
     private RadioButton rb_male;
     private RadioButton rb_female;
     private RadioGroup rg_gender;
@@ -97,11 +104,27 @@ public class DetailsActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                btn_finish_register_OnClickEvent();
+                btn_goBack_OnClickEvent();
             }
 
         });
 
+
+    }
+
+    private void showLoadingDialog() {
+        loadingDialog = new Dialog(this);
+        loadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        loadingDialog.setContentView(new ProgressBar(this));
+        loadingDialog.setCancelable(false); // Prevent closing by tapping outside
+        Objects.requireNonNull(loadingDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        loadingDialog.show();
+    }
+
+    private void hideLoadingDialog() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
     }
 
     private void btn_pickBirthDate_onClickEvent() {
@@ -145,6 +168,10 @@ public class DetailsActivity extends AppCompatActivity {
 
         timePickerDialog.show();
 
+    }
+
+    private void btn_goBack_OnClickEvent() {
+        finish();
     }
 
     private void btn_finish_register_OnClickEvent() {
@@ -231,11 +258,12 @@ public class DetailsActivity extends AppCompatActivity {
 // Add an OK button
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-
             public void onClick(DialogInterface dialog, int which) {
                 Intent onCreateIntent = getIntent();
                 String email = onCreateIntent.getStringExtra(Constants.PASSKEY_UserEmail);
                 String password = onCreateIntent.getStringExtra(Constants.PASSKEY_UserPassword);
+
+                showLoadingDialog();
 
                 registerUserAsync(email, password, userData)
                         .thenAccept(result -> {
@@ -248,9 +276,11 @@ public class DetailsActivity extends AppCompatActivity {
                             Log.e(TAG, "Error occurred: ", e);
                             dialog.dismiss();
                             return null;
-                        });
-                // Handle OK button click
-
+                        })
+                        .whenComplete((res, ex) -> {
+                            hideLoadingDialog();
+                        })
+                        ;
             }
         });
 
@@ -337,6 +367,14 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+        btn_goBack = findViewById(R.id.btn_goBack);
+        btn_goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_goBack_OnClickEvent();
+            }
+        });
+
         et_username = findViewById(R.id.et_username);
         et_username.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,6 +393,8 @@ public class DetailsActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
 }
