@@ -113,51 +113,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        navigateToDetails(email, password);
 
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        try {
-                            Log.i(TAG, "RESULT REGISTER: " + task.getResult());
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-
-
-                                String message = "Success, email: " + user.getEmail();
-
-                                Toast.makeText(
-                            RegisterActivity.this,
-                                    message,
-                                    Toast.LENGTH_LONG
-                                )
-                                .show();
-
-                                navigateToDetails(user);
-                                mAuth.signOut();
-
-                                finish();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-                        catch(Exception e) {
-                            Log.e(TAG, "An error occurred while trying to create a user");
-                            Toast.makeText(RegisterActivity.this, FormValidation.WarningMessage.INVALID_EMAIL_WARNING.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-
+        finish();
     }
 
-    private void navigateToDetails(FirebaseUser userToLogin) {
+    private void navigateToDetails(String email, String password) {
         Intent openDetailsActivity = new Intent(RegisterActivity.this, DetailsActivity.class);
-        openDetailsActivity.putExtra(Constants.PASSKEY_FirebaseUser, userToLogin);
+        openDetailsActivity.putExtra(Constants.PASSKEY_UserEmail, email);
+        openDetailsActivity.putExtra(Constants.PASSKEY_UserPassword, password);
         startActivity(openDetailsActivity);
     }
     private void InitializeComponents() {

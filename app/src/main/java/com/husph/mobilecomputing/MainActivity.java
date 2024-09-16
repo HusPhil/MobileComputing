@@ -3,10 +3,16 @@ package com.husph.mobilecomputing;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,8 +20,15 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.husph.mobilecomputing.models.LetterCard;
+import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.DetailsActivity;
 import com.husph.mobilecomputing.utils.FormValidation;
@@ -30,8 +43,12 @@ public class MainActivity extends AppCompatActivity {
     CardGridAdapter cardGridAdapter;
 
     FirebaseAuth mAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference usersRef;
 
     RecyclerView rv_card_grid;
+    TextView tv_currentUser;
+    MaterialToolbar tb_mainAct;
 
     private String selectedWord = "Hello World".trim().replaceAll("\\s", "").toUpperCase();
     private List<LetterCard> letterCards;
@@ -49,6 +66,73 @@ public class MainActivity extends AppCompatActivity {
         setupCardGrid();
         mAuth = FirebaseAuth.getInstance();
         handleUserNotLoggedIn();
+
+        InitializeComponents();
+        showCurrentUserName();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.mi_logout) {
+            logOutUser();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logOutUser() {
+        mAuth.signOut();
+        handleUserNotLoggedIn();
+    }
+
+    private void showCurrentUserName() {
+        String userId = mAuth.getCurrentUser().getUid();
+
+        usersRef.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                try {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        UserProfile userProfile = task.getResult().getValue(UserProfile.class);
+
+                        String toolBarTitle = "Welcome back, " + userProfile.getUsername() + "!";
+                        tb_mainAct.setTitle(toolBarTitle);
+                    }
+                } catch (Exception e) {
+                    Log.e("Firebase Error: MainAct", e.toString());
+                    String toolBarTitle = "Welcome back!";
+                    tb_mainAct.setTitle(toolBarTitle);
+                    Toast.makeText(MainActivity.this, "An error occurred while loading data", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void InitializeComponents() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        usersRef = firebaseDatabase.getReference("users");
+
+
+
+        tv_currentUser = findViewById(R.id.tv_currentUser);
+        tb_mainAct = findViewById((R.id.tb_mainAct));
+        setSupportActionBar(tb_mainAct);
+
     }
 
     private void setupCardGrid() {

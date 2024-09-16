@@ -109,6 +109,12 @@
                     android:fontFamily="@font/poppins"
                     android:text="Submit" />
 
+                <ProgressBar
+                    android:id="@+id/pb_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dps_primary_200"
+                    />
+
                 <TextView
                     android:id="@+id/tv_to_register"
                     android:layout_width="match_parent"

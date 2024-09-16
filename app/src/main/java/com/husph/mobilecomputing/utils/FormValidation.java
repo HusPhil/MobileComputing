@@ -13,7 +13,7 @@ public class FormValidation {
     public enum WarningMessage {
         INVALID_USERNAME("Invalid username"),
         INVALID_PHONE_NUMBER("Invalid phone number"),
-        INVALID_COUNTRY("Invalid country"),
+        INVALID_PROVINCE("Invalid province"),
         INVALID_STATE("Invalid state"),
         INVALID_GENDER("Invalid gender"),
         INVALID_BIRTH_DATE("Invalid birth date"),
@@ -46,7 +46,7 @@ public class FormValidation {
         FORM_VALID,
         INVALID_USERNAME,
         INVALID_PHONE_NUMBER,
-        INVALID_COUNTRY,
+        INVALID_PROVINCE,
         INVALID_STATE,
         INVALID_GENDER,
         INVALID_BIRTH_DATE,
@@ -78,12 +78,12 @@ public class FormValidation {
         return FormValidationResult.FORM_VALID;
     }
 
-    public static FormValidationResult isDetailsFormValid(String username, String phoneNumber, String country, String gender, String birthDate, String birthTime, String interests, Set<String> countries) {
+    public static FormValidationResult isDetailsFormValid(String username, String phoneNumber, String Province, String gender, String birthDate, String birthTime, String interests, Set<String> provinces) {
         if(TextUtils.isEmpty(username) || username.length() < 3) return FormValidationResult.INVALID_USERNAME;
 
         if(TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 11) return FormValidationResult.INVALID_PHONE_NUMBER;
 
-        if(TextUtils.isEmpty(country) || !countries.contains(country)) return FormValidationResult.INVALID_COUNTRY;
+        if(TextUtils.isEmpty(Province) || !provinces.contains(Province)) return FormValidationResult.INVALID_PROVINCE;
 
         if(TextUtils.isEmpty(gender)) return FormValidationResult.INVALID_GENDER;
 

@@ -1,12 +1,14 @@
 package com.husph.mobilecomputing;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
 import com.husph.mobilecomputing.utils.FormValidation;
 
@@ -38,10 +41,15 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tv_to_register;
     private EditText et_email_login;
     private EditText et_password_login;
+    private ProgressBar pb_login;
+
+    private SharedPreferences loginPrefs;
+    private SharedPreferences.Editor loginPrefsEditor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
@@ -52,15 +60,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
         InitializeComponents();
-        mAuth = FirebaseAuth.getInstance();
-        firebaseAuthUtils = new FirebaseAuthUtils(mAuth);
+
 
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if(!firebaseAuthUtils.isUserLoggedIn()){
+                if (!firebaseAuthUtils.isUserLoggedIn()) {
                     return;
                 }
             }
@@ -75,20 +81,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleUserLoggedIn() {
-        if(firebaseAuthUtils.isUserLoggedIn()) {
+
+        if (firebaseAuthUtils.isUserLoggedIn()) {
 
             Toast.makeText(
-                    LoginActivity.this,
-                    FormValidation.WarningMessage.USER_ALREADY_LOGGED_IN_WARNING.getMessage(),
-                    Toast.LENGTH_LONG
-            )
-            .show();
+                LoginActivity.this,
+                FormValidation.WarningMessage.USER_ALREADY_LOGGED_IN_WARNING.getMessage(),
+                Toast.LENGTH_LONG
+                )
+                .show();
             finish();
         }
     }
 
     private void btn_login_OnClickEvent() {
 
+        pb_login.setVisibility(View.VISIBLE);
         handleUserLoggedIn();
 
         final String email = et_email_login.getText().toString().trim();
@@ -116,6 +124,12 @@ public class LoginActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(message)) {
             Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT)
                     .show();
+            pb_login.setVisibility(View.INVISIBLE);
+            return;
+        }
+
+        if(isLoginLocked()) {
+            pb_login.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -127,17 +141,55 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            pb_login.setVisibility(View.INVISIBLE);
+                            resetFailedLoginCounter();
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                            pb_login.setVisibility(View.INVISIBLE);
+                            handleFailedLoginAttempt();
                         }
                     }
                 });
 
     }
+
+    private void handleFailedLoginAttempt() {
+        int attempts = loginPrefs.getInt(Constants.LOGIN_ATTEMPTS_COUNT_PREFKEY, 0);
+        attempts++;
+        loginPrefsEditor.putInt(Constants.LOGIN_ATTEMPTS_COUNT_PREFKEY, attempts);
+        loginPrefsEditor.apply();
+
+        if (attempts >= Constants.LOGIN_MAX_ATTEMPTS) {
+            // Lock the user out for the specified time
+            long lockoutEndTime = System.currentTimeMillis() + Constants.LOGIN_LOCKOUT_TIME;
+            loginPrefsEditor.putLong(Constants.LOGIN_LOCK_OUT_END_TIME_PREFKEY, lockoutEndTime);
+            loginPrefsEditor.apply();
+            Toast.makeText(this, "Too many attempts. Try again in 1 minute.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Incorrect password. Attempt " + attempts + " of " + Constants.LOGIN_MAX_ATTEMPTS, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private boolean isLoginLocked() {
+        long lockoutEndTime = loginPrefs.getLong(Constants.LOGIN_LOCK_OUT_END_TIME_PREFKEY, 0);
+        if (System.currentTimeMillis() < lockoutEndTime) {
+            long timeLeft = (lockoutEndTime - System.currentTimeMillis()) / 1000;
+            Toast.makeText(this, "Try again in " + timeLeft + " seconds", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private void resetFailedLoginCounter() {
+        loginPrefsEditor.putInt(Constants.LOGIN_ATTEMPTS_COUNT_PREFKEY, 0);
+        loginPrefsEditor.apply();
+    }
+
 
     private void tv_to_register_OnClickEvent() {
         Toast.makeText(
@@ -151,6 +203,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void InitializeComponents() {
+        mAuth = FirebaseAuth.getInstance();
+        firebaseAuthUtils = new FirebaseAuthUtils(mAuth);
+        loginPrefs = getSharedPreferences("LogInPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPrefs.edit();
+
+        pb_login = findViewById(R.id.pb_login);
+        pb_login.setVisibility(View.INVISIBLE);
+
         btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(
                 new View.OnClickListener() {
@@ -173,6 +233,7 @@ public class LoginActivity extends AppCompatActivity {
 
         et_email_login = findViewById(R.id.et_email_login);
         et_password_login = findViewById(R.id.et_password_login);
+
 
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/fs_primary_200</item> <!-- Optional: Set font size -->
+        <item name="android:textColor">@color/black</item> <!-- Optional: Set text color -->
+        <item name="android:maxLines">1</item>
+        <item name="marginHorizontal">@dimen/padding_small</item>
+    </style>
+</resources>

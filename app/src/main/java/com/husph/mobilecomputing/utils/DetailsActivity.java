@@ -4,19 +4,16 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,46 +25,61 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.husph.mobilecomputing.R;
-import com.husph.mobilecomputing.RegisterActivity;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class DetailsActivity extends AppCompatActivity {
 
     final static String TAG = "DetailsActivity";
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference usersRef;
 
 
+    private final String[] philippinesProvinces = {
+            "Abra", "Agusan del Norte", "Agusan del Sur", "Aklan", "Albay", "Antique",
+            "Apayao", "Aurora", "Basilan", "Bataan", "Batanes", "Batangas",
+            "Benguet", "Biliran", "Bohol", "Bukidnon", "Bulacan", "Cagayan",
+            "Camarines Norte", "Camarines Sur", "Camiguin", "Capiz", "Catanduanes",
+            "Cavite", "Cebu", "Compostela Valley", "Cotabato", "Davao del Norte",
+            "Davao del Sur", "Davao Occidental", "Davao Oriental", "Dinagat Islands",
+            "Eastern Samar", "Guimaras", "Ifugao", "Ilocos Norte", "Ilocos Sur",
+            "Iloilo", "Isabela", "Kalinga", "La Union", "Laguna", "Lanao del Norte",
+            "Lanao del Sur", "Leyte", "Maguindanao", "Marinduque", "Masbate",
+            "Misamis Occidental", "Misamis Oriental", "Mountain Province",
+            "Negros Occidental", "Negros Oriental", "Northern Samar",
+            "Nueva Ecija", "Nueva Vizcaya", "Occidental Mindoro", "Oriental Mindoro",
+            "Palawan", "Pampanga", "Pangasinan", "Quezon", "Quirino",
+            "Rizal", "Romblon", "Samar", "Sarangani", "Siquijor", "Sorsogon",
+            "South Cotabato", "Southern Leyte", "Sultan Kudarat", "Sulu",
+            "Surigao del Norte", "Surigao del Sur", "Tarlac", "Tawi-Tawi",
+            "Zambales", "Zamboanga del Norte", "Zamboanga del Sur",
+            "Zamboanga Sibugay"
+    };
 
-
-    private final Map<String, String[]> countryToStates = Map.of(
-            "Philippines", new String[]{"Ilocos Norte", "Cebu", "Davao", "Laguna", "Pampanga"},
-            "USA", new String[]{"California", "Texas", "New York", "Florida", "Illinois"},
-            "India", new String[]{"Maharashtra", "Karnataka", "Tamil Nadu", "West Bengal", "Gujarat"},
-            "Australia", new String[]{"New South Wales", "Victoria", "Queensland", "South Australia", "Western Australia"},
-            "Canada", new String[]{"Ontario", "Quebec", "British Columbia", "Alberta", "Manitoba"}
-    );
-
-    String[] countries;
-    String[] states;
-
-    private Spinner spn_state;
-    private AutoCompleteTextView act_country;
     private TextView tv_birthDate;
     private TextView tv_birthTime;
-    private Button btn_pickBirthDate;
-    private Button btn_pickBirthTime;
+    private ImageButton btn_pickBirthDate;
+    private ImageButton btn_pickBirthTime;
     private Button btn_finish_register;
     private RadioButton rb_male;
     private RadioButton rb_female;
     private RadioGroup rg_gender;
     private TextInputEditText et_username;
     private TextInputEditText et_phone_number;
+    private TextInputEditText et_province;
     private EditText et_interests;
 
-    private ArrayAdapter stateArrAdapter, countryArrAdapter;
     private final Calendar calendar = Calendar.getInstance();
 
     @Override
@@ -85,57 +97,9 @@ public class DetailsActivity extends AppCompatActivity {
         getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                final String username = et_username.getText().toString().trim();
-                final  String phoneNumber = et_phone_number.getText().toString().trim();
-                final  String country = act_country.getText().toString().trim();
-                final String state = spn_state.getSelectedItem().toString().toString();
-                final String gender = String.valueOf(rg_gender.getCheckedRadioButtonId() == R.id.rb_female ? rb_female.getText() : rb_male.getText());
-                final String birthDate = tv_birthDate.getText().toString().trim();
-                final String birthTime = tv_birthTime.getText().toString().trim();
-                final String interests = et_interests.getText().toString().trim();
-                FormValidation.FormValidationResult registerFormResult = FormValidation.isDetailsFormValid(
-                        username,
-                        phoneNumber,
-                        country,
-                        gender,
-                        birthDate,
-                        birthTime,
-                        interests,
-                        countryToStates.keySet()
-
-                );
-
-                String message = "";
-
-                switch (registerFormResult) {
-                    case INVALID_USERNAME:
-                        message = FormValidation.WarningMessage.INVALID_USERNAME.getMessage();
-                        break;
-                    case INVALID_PHONE_NUMBER:
-                        message = FormValidation.WarningMessage.INVALID_PHONE_NUMBER.getMessage();
-                        break;
-                    case INVALID_COUNTRY:
-                        message = FormValidation.WarningMessage.INVALID_COUNTRY.getMessage();
-                        break;
-                    case INVALID_STATE:
-                        message = FormValidation.WarningMessage.INVALID_STATE.getMessage();
-                        break;
-                    case INVALID_GENDER:
-                        message = FormValidation.WarningMessage.INVALID_GENDER.getMessage();
-                        break;
-                    case INVALID_BIRTH_DATE:
-                        message = FormValidation.WarningMessage.INVALID_BIRTH_DATE.getMessage();
-                        break;
-                    case INVALID_BIRTH_TIME:
-                        message = FormValidation.WarningMessage.INVALID_BIRTH_TIME.getMessage();
-                        break;
-                }
-
-                if(!TextUtils.isEmpty(message)) {
-                    Toast.makeText(DetailsActivity.this, message, Toast.LENGTH_SHORT)
-                            .show();
-                }
+                btn_finish_register_OnClickEvent();
             }
+
         });
 
     }
@@ -186,8 +150,7 @@ public class DetailsActivity extends AppCompatActivity {
     private void btn_finish_register_OnClickEvent() {
         final String username = et_username.getText().toString().trim();
         final String phoneNumber = et_phone_number.getText().toString().trim();
-        final String country = act_country.getText().toString().trim();
-        final String state = spn_state.getSelectedItem().toString().toString();
+        final String province = et_province.getText().toString().trim();
         final String gender = String.valueOf(rg_gender.getCheckedRadioButtonId() == R.id.rb_female ? rb_female.getText() : rb_male.getText());
         final String birthDate = tv_birthDate.getText().toString().trim();
         final String birthTime = tv_birthTime.getText().toString().trim();
@@ -196,12 +159,12 @@ public class DetailsActivity extends AppCompatActivity {
         FormValidation.FormValidationResult registerFormResult = FormValidation.isDetailsFormValid(
                 username,
                 phoneNumber,
-                country,
+                province,
                 gender,
                 birthDate,
                 birthTime,
                 interests,
-                countryToStates.keySet()
+                new HashSet<>(Arrays.asList(philippinesProvinces))
         );
 
         String message = "";
@@ -213,8 +176,8 @@ public class DetailsActivity extends AppCompatActivity {
             case INVALID_PHONE_NUMBER:
                 message = FormValidation.WarningMessage.INVALID_PHONE_NUMBER.getMessage();
                 break;
-            case INVALID_COUNTRY:
-                message = FormValidation.WarningMessage.INVALID_COUNTRY.getMessage();
+            case INVALID_PROVINCE:
+                message = FormValidation.WarningMessage.INVALID_PROVINCE.getMessage();
                 break;
             case INVALID_STATE:
                 message = FormValidation.WarningMessage.INVALID_STATE.getMessage();
@@ -233,11 +196,22 @@ public class DetailsActivity extends AppCompatActivity {
                 break;
         }
 
-        if(!TextUtils.isEmpty(message)) {
+        if (!TextUtils.isEmpty(message)) {
             Toast.makeText(DetailsActivity.this, message, Toast.LENGTH_SHORT)
                     .show();
             return;
         }
+
+        Map<String, Object> userData = new HashMap<>();
+
+        userData.put("username", username);
+        userData.put("phoneNumber", phoneNumber);
+        userData.put("province", province);
+        userData.put("gender", gender);
+        userData.put("birthDate", birthDate);
+        userData.put("birthTime", birthTime);
+        userData.put("interests", interests);
+
 
         // Create an AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -245,8 +219,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         String toastMessage = "Username: " + username + "\n" +
                 "Phone Number: " + phoneNumber + "\n" +
-                "Country: " + country + "\n" +
-                "State: " + state + "\n" +
+                "Province: " + province + "\n" +
                 "Gender: " + gender + "\n" +
                 "Birth Date: " + birthDate + "\n" +
                 "Birth Time: " + birthTime + "\n" +
@@ -260,9 +233,24 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
 
             public void onClick(DialogInterface dialog, int which) {
+                Intent onCreateIntent = getIntent();
+                String email = onCreateIntent.getStringExtra(Constants.PASSKEY_UserEmail);
+                String password = onCreateIntent.getStringExtra(Constants.PASSKEY_UserPassword);
+
+                registerUserAsync(email, password, userData)
+                        .thenAccept(result -> {
+                            // Handle success (e.g., navigating to another activity)
+                            dialog.dismiss();
+                            finish();
+                        })
+                        .exceptionally(e -> {
+                            // Handle failure (e.g., show an error dialog)
+                            Log.e(TAG, "Error occurred: ", e);
+                            dialog.dismiss();
+                            return null;
+                        });
                 // Handle OK button click
-                dialog.dismiss();
-                finish();
+
             }
         });
 
@@ -272,17 +260,55 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
+    private CompletableFuture<Void> registerUserAsync(String email, String password, Map<String, Object> userData) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        if (user != null) {
+                            String userId = user.getUid();
+
+                            usersRef.child(userId).setValue(userData)
+                                    .addOnCompleteListener(detailsTask -> {
+                                        if (detailsTask.isSuccessful()) {
+                                            runOnUiThread(() -> Toast.makeText(DetailsActivity.this, "User data saved", Toast.LENGTH_SHORT).show());
+                                            Log.i(TAG, "User data saved for: " + user.getEmail());
+                                            mAuth.signOut();
+                                            future.complete(null);
+                                        } else {
+                                            Log.e(TAG, "Error saving user data: " + detailsTask.getException());
+                                            runOnUiThread(() -> Toast.makeText(DetailsActivity.this, "Error saving user data", Toast.LENGTH_SHORT).show());
+                                            future.completeExceptionally(detailsTask.getException());
+                                        }
+                                    });
+                        } else {
+                            Log.e(TAG, "FirebaseUser is null after successful registration");
+                            runOnUiThread(() -> Toast.makeText(DetailsActivity.this, "Error: User data is missing", Toast.LENGTH_SHORT).show());
+                            future.completeExceptionally(new Exception("User is null"));
+                        }
+                    } else {
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        runOnUiThread(() -> Toast.makeText(DetailsActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show());
+                        future.completeExceptionally(task.getException());
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Registration failed: " + e.getMessage());
+                    runOnUiThread(() -> Toast.makeText(DetailsActivity.this, FormValidation.WarningMessage.INVALID_EMAIL_WARNING.getMessage(), Toast.LENGTH_SHORT).show());
+                    future.completeExceptionally(e);
+                });
+
+        return future;
+    }
+
     private void InitializeComponents() {
-        countries = countryToStates.keySet().toArray(new String[0]);
-        states = countryToStates.get("Philippines");
 
-        spn_state = findViewById(R.id.spn_state);
-        stateArrAdapter = new ArrayAdapter(DetailsActivity.this, android.R.layout.simple_list_item_1, states);
-        spn_state.setAdapter(stateArrAdapter);
-
-        act_country = findViewById(R.id.act_country);
-        countryArrAdapter = new ArrayAdapter(DetailsActivity.this, android.R.layout.simple_list_item_1, countries);
-        act_country.setAdapter(countryArrAdapter);
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        usersRef = firebaseDatabase.getReference("users");
 
         tv_birthDate = findViewById(R.id.tv_birthDate);
         tv_birthTime = findViewById(R.id.tv_birthTime);
@@ -312,42 +338,23 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
         et_username = findViewById(R.id.et_username);
+        et_username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i(TAG, "onClick: save details");
+                usersRef.push().setValue("test");
+            }
+        });
         et_phone_number = findViewById(R.id.et_phone_number);
         et_interests = findViewById(R.id.et_interests);
+        et_province = findViewById(R.id.et_province);
 
         rb_male = findViewById(R.id.rb_male);
         rb_female = findViewById(R.id.rb_female);
         rg_gender = findViewById(R.id.rg_gender);
 
-        act_country.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                String selectedKey = charSequence.toString();
-                if (countryToStates.containsKey(selectedKey)) {
-                    // Update the states array based on the selected country
-                    states = countryToStates.get(selectedKey);
-
-                    // Create a new adapter with the updated states array
-                    stateArrAdapter = new ArrayAdapter<>(DetailsActivity.this, android.R.layout.simple_spinner_item, states);
-                    stateArrAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // Set the new adapter to the Spinner
-                    spn_state.setAdapter(stateArrAdapter);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
-
-
 
     }
-
-
 
 
 }

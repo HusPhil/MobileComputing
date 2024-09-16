@@ -115,48 +115,21 @@
                 app:contentPadding="@dimen/padding_small"
                 app:cardCornerRadius="@dimen/padding_small"
                 app:cardElevation="4dp">
-                <LinearLayout
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:startIconDrawable="@drawable/ic_country">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/act_country"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_province"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_country"
-                        android:drawableTint="@color/material_dynamic_neutral95"
-                        android:fontFamily="@font/poppins"
-                        android:paddingBottom="@dimen/padding_medium"
-                        android:textSize="@dimen/fs_secondary_100"
-                        android:allowUndo="true"
-                        android:hint="Country"
-                        android:drawablePadding="@dimen/padding_small"
-                        android:textColor="@color/material_dynamic_neutral70"
-                        android:textColorHint="@color/material_dynamic_neutral70" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/padding_small"
-                            android:fontFamily="@font/poppins"
-                            android:gravity="center"
-                            android:text="State: "
-                            android:textColor="@color/material_dynamic_neutral70"
-                            android:textSize="@dimen/fs_secondary_100" />
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:id="@+id/spn_state">
-                        </Spinner>
-
-                    </LinearLayout>
-                </LinearLayout>
+                        android:hint="Province"
+                        android:inputType="textAutoComplete"
+                        android:textSize="@dimen/fs_secondary_100" />
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -246,13 +219,14 @@
                             android:layout_marginVertical="@dimen/padding_small"
                             android:textSize="@dimen/fs_secondary_100"
                             android:fontFamily="@font/poppins"
-                            android:textColor="@color/material_dynamic_neutral70"/>
+                            android:textColor="@color/black"/>
 
-                        <Button
+                        <ImageButton
                             android:id="@+id/btn_pickBirthDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_calendar"
+                            android:backgroundTint="@color/cardview_shadow_start_color"
+                            android:src="@drawable/ic_calendar"
                             android:text="Pick"
                             android:textSize="@dimen/fs_secondary_100"
                             android:layout_gravity="end"/>
@@ -283,16 +257,17 @@
                             android:layout_marginVertical="@dimen/padding_small"
                             android:textSize="@dimen/fs_secondary_100"
                             android:fontFamily="@font/poppins"
-                            android:textColor="@color/material_dynamic_neutral70"/>
+                            android:textColor="@color/black
+"/>
 
-                        <Button
+                        <ImageButton
                             android:id="@+id/btn_pickBirthTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_calendar"
-                            android:text="Pick"
-                            android:textSize="@dimen/fs_secondary_100"
-                            android:layout_gravity="end"/>
+                            android:layout_gravity="end"
+                            android:backgroundTint="@color/cardview_shadow_start_color"
+                            android:src="@drawable/ic_time"
+                            android:textSize="@dimen/fs_secondary_100" />
 
                     </LinearLayout>
                 </LinearLayout>

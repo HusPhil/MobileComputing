@@ -5,7 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:menu="@menu/main_menu"
     tools:context=".MainActivity">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_card_grid"
@@ -15,17 +17,36 @@
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_currentUser"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_currentUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dps_secondary_100"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center"
         android:text="Fhil Joshua P. Caguicla CS-3101"
-        android:fontFamily="@font/poppins_semibold"
-        android:layout_margin="@dimen/dps_secondary_100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tb_mainAct" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tb_mainAct"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#3DDC84"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="@color/black"
+        app:titleTextAppearance="@style/CustomToolbarTitle"
+        app:title="Mobile Computing"
+        app:titleCentered="true"
+        app:menu="@menu/main_menu"
+        app:navigationIcon="@drawable/ic_account"
+        app:navigationContentDescription="@string/manage_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
