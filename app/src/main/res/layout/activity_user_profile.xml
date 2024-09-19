@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserProfileActivity">
+
+    <!-- ScrollView to allow vertical scrolling -->
+    <android.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <!-- A vertical LinearLayout to hold all content -->
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_medium">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/padding_small"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/padding_small"
+                app:cardElevation="@dimen/padding_small">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:labelFor="@id/card_display_auth"
+                    android:padding="@dimen/padding_small"
+                    android:textAlignment="center"
+                    android:text="User Profile"
+                    android:textColor="@color/material_dynamic_neutral70"
+                    android:textSize="@dimen/fs_primary_200" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- All content inside the LinearLayout for scrolling -->
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:labelFor="@id/card_display_auth"
+                android:text="Auth Details"
+                android:textColor="@color/material_dynamic_neutral70"
+                android:textSize="@dimen/fs_secondary_100" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_display_auth"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/padding_small"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/padding_small">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_small">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textSize="@dimen/fs_secondary_100"
+                        android:enabled="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:text="Personal Details"
+                android:textColor="@color/material_dynamic_neutral70"
+                android:textSize="@dimen/fs_secondary_100" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                app:cardCornerRadius="@dimen/padding_small">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_small">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:enabled="false"
+                        android:hint="Username"
+                        android:inputType="textAutoComplete"
+                        android:textSize="@dimen/fs_secondary_100" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                app:cardCornerRadius="@dimen/padding_small">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_small">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:enabled="false"
+                        android:hint="Phone number"
+                        android:inputType="phone"
+                        android:textSize="@dimen/fs_secondary_100" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                app:cardCornerRadius="@dimen/padding_small">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_small">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_province"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Province"
+                        android:enabled="false"
+                        android:inputType="textAutoComplete"
+                        android:textSize="@dimen/fs_secondary_100" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                app:cardCornerRadius="@dimen/padding_small">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_small">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Gender"
+                        android:inputType="textAutoComplete"
+                        android:enabled="false"
+                        android:textSize="@dimen/fs_secondary_100" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/padding_small"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_small">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/padding_small"
+                        android:text="(Birth date)"
+                        android:layout_marginVertical="@dimen/padding_small"
+                        android:textSize="@dimen/fs_secondary_100"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/material_dynamic_neutral70"/>
+
+                    <TextView
+                        android:id="@+id/tv_display_birthDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="@dimen/padding_small"
+                        android:textSize="@dimen/fs_secondary_100"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/padding_small">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(Birth time)"
+                        android:layout_marginVertical="@dimen/padding_small"
+                        android:textSize="@dimen/fs_secondary_100"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/material_dynamic_neutral70"
+                        android:layout_marginRight="@dimen/padding_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_display_birthTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginVertical="@dimen/padding_small"
+                        android:textSize="@dimen/fs_secondary_100"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/white"/>
+
+
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                app:cardCornerRadius="@dimen/padding_small">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/padding_small">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_display_interests"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Interests"
+                        android:enabled="false"
+                        android:inputType="textAutoComplete"
+                        android:textSize="@dimen/fs_secondary_100" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+
+    </android.widget.ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

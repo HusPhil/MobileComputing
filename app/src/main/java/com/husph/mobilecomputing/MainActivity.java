@@ -1,11 +1,17 @@
 package com.husph.mobilecomputing;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 import com.husph.mobilecomputing.models.LetterCard;
 import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
@@ -32,7 +39,6 @@ import com.husph.mobilecomputing.utils.FormValidation;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = "MainActivity";
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference usersRef;
+    private UserProfile userProfile;
+    private Gson gson;
 
     RecyclerView rv_card_grid;
     TextView tv_currentUser;
@@ -60,12 +68,16 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        setupCardGrid();
-        mAuth = FirebaseAuth.getInstance();
-        handleUserNotLoggedIn();
-
         InitializeComponents();
+
+        setupCardGrid();
+        handleUserNotLoggedIn();
+    }
+
+    @Override
+    protected void onStart() {
         showCurrentUserName();
+        super.onStart();
     }
 
     @Override
@@ -81,10 +93,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId() == R.id.mi_logout) {
-            logOutUser();
+            showLogOutDialog();
         }
 
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void tbNavigation_OnClickEvent() {
+        if(userProfile == null) return;
+        Intent openUserProfileActivity = new Intent(MainActivity.this, UserProfileActivity.class);
+
+        if(userProfile != null) {
+            openUserProfileActivity.putExtra(Constants.PASSKEY_UseProfile, gson.toJson(userProfile));
+        }
+
+        startActivity(openUserProfileActivity);
+    }
+
+    private void showLogOutDialog() {
+        AlertDialog.Builder logOutDialogBuilder = new AlertDialog.Builder(this);
+
+        logOutDialogBuilder.setTitle("You are about to log out");
+        logOutDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                logOutUser();
+            }
+        });
+        logOutDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        AlertDialog logOutDialog =  logOutDialogBuilder.create();
+
+        logOutDialog.show();
     }
 
     private void logOutUser() {
@@ -105,7 +151,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                        UserProfile userProfile = task.getResult().getValue(UserProfile.class);
+                        userProfile = task.getResult().getValue(UserProfile.class);
+
 
                         String toolBarTitle = "Welcome back, " + userProfile.getUsername() + "!";
                         tb_mainAct.setTitle(toolBarTitle);
@@ -121,16 +168,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InitializeComponents() {
+        mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         usersRef = firebaseDatabase.getReference("users");
-
-
+        gson = new Gson();
 
         tv_currentUser = findViewById(R.id.tv_currentUser);
         tb_mainAct = findViewById((R.id.tb_mainAct));
         setSupportActionBar(tb_mainAct);
 
+        tb_mainAct.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tbNavigation_OnClickEvent();
+            }
+        });
+
     }
+
+
 
     private void setupCardGrid() {
         rv_card_grid = findViewById(R.id.rv_card_grid);

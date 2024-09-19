@@ -202,7 +202,7 @@ public class LoginActivity extends AppCompatActivity {
         InitializeComponents();
     }
 
-    private void InitializeComponents() {
+    private void InitializeComponents()     {
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthUtils = new FirebaseAuthUtils(mAuth);
         loginPrefs = getSharedPreferences("LogInPrefs", MODE_PRIVATE);

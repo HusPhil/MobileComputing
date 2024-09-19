@@ -6,6 +6,15 @@ public class UserProfile {
     private String province;
     private String birthDate;
     private String birthTime;
+    private String gender;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     public String getInterests() {
         return interests;
@@ -67,14 +76,17 @@ public class UserProfile {
             String province,
             String birthDate,
             String birthTime,
-            String interests
+            String interests,
+            String gender
     ) {
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.province = phoneNumber;
         this.birthDate = birthDate;
         this.birthTime = birthTime;
+        this.gender = gender;
         this.interests = interests;
     }
+
 
 }

@@ -38,7 +38,7 @@
         android:id="@+id/tb_mainAct"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#3DDC84"
+        android:background="@color/green_primary"
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@color/black"
         app:titleTextAppearance="@style/CustomToolbarTitle"
