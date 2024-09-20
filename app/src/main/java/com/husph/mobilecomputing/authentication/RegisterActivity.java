@@ -1,4 +1,4 @@
-package com.husph.mobilecomputing;
+package com.husph.mobilecomputing.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.husph.mobilecomputing.R;
 import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
 import com.husph.mobilecomputing.utils.FormValidation;

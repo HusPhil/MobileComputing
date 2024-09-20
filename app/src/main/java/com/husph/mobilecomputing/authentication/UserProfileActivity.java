@@ -1,4 +1,4 @@
-package com.husph.mobilecomputing;
+package com.husph.mobilecomputing.authentication;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+import com.husph.mobilecomputing.R;
 import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
 

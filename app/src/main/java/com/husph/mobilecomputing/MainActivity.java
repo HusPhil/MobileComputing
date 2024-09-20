@@ -1,18 +1,15 @@
 package com.husph.mobilecomputing;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.usage.NetworkStats;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.SignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,13 +32,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.husph.mobilecomputing.authentication.LoginActivity;
+import com.husph.mobilecomputing.authentication.UserProfileActivity;
+import com.husph.mobilecomputing.calculator.ButtonClickManager;
+import com.husph.mobilecomputing.calculator.CalculatorActivity;
+import com.husph.mobilecomputing.models.FlipCardManager;
 import com.husph.mobilecomputing.models.LetterCard;
 import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.FormValidation;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import kotlinx.coroutines.Delay;
+
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = "MainActivity";
@@ -61,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
     MaterialToolbar tb_mainAct;
 
     private String selectedWord = "Hello World".trim().replaceAll("\\s", "").toUpperCase();
+    private FlipCardManager flipCardManager;
     private List<LetterCard> letterCards;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         usersRef = firebaseDatabase.getReference("users");
         gson = new Gson();
+        flipCardManager = new FlipCardManager(selectedWord);
 
         tv_currentUser = findViewById(R.id.tv_currentUser);
         tb_mainAct = findViewById((R.id.tb_mainAct));
@@ -190,17 +196,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
     }
 
 
 
     private void setupCardGrid() {
         rv_card_grid = findViewById(R.id.rv_card_grid);
-        letterCards = getLetterCards(selectedWord);
+        letterCards = flipCardManager.getLetterCards();
 
         CardGridAdapter.CardClickListener cardClickListener = position -> {
-            Log.i(TAG, "Trying card click listener on MainActivity");
-            flipLetterCard(position);
+            handleCardFlip(position);
         };
 
         cardGridAdapter = new CardGridAdapter(
@@ -214,6 +223,18 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, Constants.CARD_GRID_COLUMN);
 
         rv_card_grid.setLayoutManager(gridLayoutManager);
+    }
+
+    private void handleCardFlip(int position) {
+        int flipCardResult = flipCardManager.flipLetterCardForResult(position, cardGridAdapter);
+        if(flipCardResult == FlipCardManager.FOUND_SELECTED_WORD) {
+            new Handler().postDelayed(() -> {
+                // After the delay, show the toast and open the CalculatorActivity
+                Toast.makeText(this, "Selected word was found", Toast.LENGTH_SHORT).show();
+                Intent openCalcu = new Intent(MainActivity.this, CalculatorActivity.class);
+                startActivity(openCalcu);
+            }, 500);
+        }
     }
 
     private void handleUserNotLoggedIn() {
@@ -231,47 +252,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void flipLetterCard(int position) {
-        LetterCard letterCard = letterCards.get(position);
-
-        letterCard.setIsFaceUp(!letterCard.getIsFaceUp());
-        cardGridAdapter.notifyItemChanged(position);
-    }
-
-    private String arrangeLetters(String word) {
-        //to arrnge letter for grid layout
-        // HELLOWORLD -> HWEOLRLLOD
-
-        int length = word.length();
-        int mid = length / Constants.CARD_GRID_COLUMN;
 
 
-        String firstHalf = word.substring(0, mid);
-        String secondHalf = word.substring(mid);
-
-        StringBuilder rearrangedLetters = new StringBuilder();
-
-        for (int i = 0; i < mid; i++) {
-            rearrangedLetters.append(firstHalf.charAt(i));
-            rearrangedLetters.append(secondHalf.charAt(i));
-        }
 
 
-        return rearrangedLetters.toString();
-    }
-
-    private List<LetterCard> getLetterCards(String word) {
-
-        final List<LetterCard> letterCards = new ArrayList<>();
-
-        final String reArrangdeLetters = arrangeLetters(word);
-
-        final char[] wordAsCharArr = reArrangdeLetters.toCharArray();
-
-        for (char letter : wordAsCharArr) {
-            letterCards.add(new LetterCard(Character.toString(letter)));
-        }
-
-        return letterCards;
-    }
 }

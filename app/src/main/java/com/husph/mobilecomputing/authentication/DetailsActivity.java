@@ -1,4 +1,4 @@
-package com.husph.mobilecomputing;
+package com.husph.mobilecomputing.authentication;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.husph.mobilecomputing.R;
 import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.FormValidation;
 

@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".calculator.CalculatorActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintHeight_max="250dp"
+        android:layout_marginBottom="@dimen/padding_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/padding_medium"
+        app:cardCornerRadius="@dimen/padding_small"
+        app:contentPadding="@dimen/padding_medium">
+
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="0"
+            android:textSize="@dimen/fs_primary_100" />
+    </androidx.cardview.widget.CardView>
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="0.0" >
+
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_clearAll"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="AC"
+                    android:textSize="@dimen/fs_secondary_100"
+                    app:cornerRadius="35dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_percent"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_percent"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="25dp"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_backspace"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_backspace"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="25dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_divide"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text=""
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_divide"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="35dp"/>
+            </androidx.cardview.widget.CardView>
+
+
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num7"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="7"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num8"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="8"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num9"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="9"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_multiply"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text=""
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_multiply"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="35dp"/>
+            </androidx.cardview.widget.CardView>
+
+
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num4"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="4"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num5"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="5"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num6"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="6"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_subtract"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text=""
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_minus"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="35dp"/>
+            </androidx.cardview.widget.CardView>
+
+
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num1"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num2"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="2"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num3"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="3"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text=""
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_plus"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="35dp"/>
+            </androidx.cardview.widget.CardView>
+
+
+        </TableRow>
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_doubleZero"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text="00"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_num0"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="0"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    android:text="."/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"
+                app:cardBackgroundColor="@android:color/transparent">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_equal"
+                    android:layout_gravity="center"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+                    android:layout_weight="1"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:text=""
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="@dimen/fs_primary_200"
+                    app:cornerRadius="35dp"
+                    app:icon="@drawable/ic_equal"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconSize="35dp"/>
+            </androidx.cardview.widget.CardView>
+
+
+        </TableRow>
+
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
