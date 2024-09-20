@@ -104,16 +104,26 @@
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dps_secondary_100"
-                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/dps_secondary_100"
+                    android:layout_marginRight="@dimen/dps_secondary_100"
                     android:fontFamily="@font/poppins"
+                    android:gravity="center"
                     android:text="Submit" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_login_google"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dps_secondary_100"
+                    android:layout_marginRight="@dimen/dps_secondary_100"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:text="Sign in with Google" />
 
                 <ProgressBar
                     android:id="@+id/pb_login"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dps_primary_200"
-                    />
+                    android:layout_height="@dimen/dps_primary_200" />
 
                 <TextView
                     android:id="@+id/tv_to_register"
@@ -121,11 +131,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dps_secondary_100"
                     android:clickable="true"
-                    android:padding="@dimen/dps_primary_100"
                     android:focusable="auto"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:labelFor="@id/et_password_register"
+                    android:padding="@dimen/dps_primary_100"
                     android:text="No account yet? Register!"
                     android:textSize="@dimen/fs_secondary_200" />
 
@@ -136,5 +146,12 @@
 
 
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

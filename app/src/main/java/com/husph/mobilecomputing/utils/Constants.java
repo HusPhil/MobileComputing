@@ -10,4 +10,7 @@ public class Constants {
     public static final long LOGIN_LOCKOUT_TIME = 1 * 60 * 1000;
     public static final String LOGIN_LOCK_OUT_END_TIME_PREFKEY = "LOCK_OUT_END_TIME";
     public static final String LOGIN_ATTEMPTS_COUNT_PREFKEY = "LOGIN_ATTEMPTS_COUNT";
+
+
+    public static final int RC_SIGN_IN = 9001;
 }

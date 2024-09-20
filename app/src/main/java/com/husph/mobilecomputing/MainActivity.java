@@ -2,6 +2,7 @@ package com.husph.mobilecomputing;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.usage.NetworkStats;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,10 +25,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.SignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference usersRef;
     private UserProfile userProfile;
     private Gson gson;
+    private SignInAccount oneTapClient;
 
     RecyclerView rv_card_grid;
     TextView tv_currentUser;
@@ -70,14 +75,14 @@ public class MainActivity extends AppCompatActivity {
         });
         InitializeComponents();
 
-        setupCardGrid();
-        handleUserNotLoggedIn();
     }
 
     @Override
     protected void onStart() {
-        showCurrentUserName();
         super.onStart();
+        handleUserNotLoggedIn();
+        setupCardGrid();
+        showCurrentUserName();
     }
 
     @Override
@@ -102,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void tbNavigation_OnClickEvent() {
-        if(userProfile == null) return;
         Intent openUserProfileActivity = new Intent(MainActivity.this, UserProfileActivity.class);
 
         if(userProfile != null) {
@@ -139,8 +143,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCurrentUserName() {
-        String userId = mAuth.getCurrentUser().getUid();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null) return;
 
+        String userId = currentUser.getUid();
         usersRef.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {

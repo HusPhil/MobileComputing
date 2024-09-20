@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
@@ -69,10 +70,19 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void showUserDetails() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser == null) {
+            Toast.makeText(this, "User is not logged in.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        et_display_email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         if(userProfile == null) {
             Toast.makeText(this, "Profile is not set up yet.", Toast.LENGTH_SHORT).show();
+            return;
         }
-        et_display_email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         et_display_username.setText(userProfile.getUsername());
         et_display_phone.setText(userProfile.getPhoneNumber());
         et_display_province.setText(userProfile.getProvince());
