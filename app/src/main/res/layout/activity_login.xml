@@ -100,30 +100,59 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_login"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dps_secondary_100"
-                    android:layout_marginRight="@dimen/dps_secondary_100"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"
-                    android:text="Submit" />
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:padding="@dimen/padding_small">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_login_google"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dps_secondary_100"
-                    android:layout_marginRight="@dimen/dps_secondary_100"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"
-                    android:text="Sign in with Google" />
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_weight="1"
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dps_secondary_100"
+                        android:layout_marginRight="@dimen/dps_secondary_100"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        android:text="Sign in" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_weight="1"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        app:cornerRadius="30dp"
+                        android:id="@+id/btn_login_google"
+                        android:layout_marginLeft="@dimen/dps_secondary_100"
+                        android:layout_marginRight="@dimen/dps_secondary_100"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        app:icon="@drawable/ic_google"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        app:iconSize="25dp"/>
+                </LinearLayout>
+
+
 
                 <ProgressBar
                     android:id="@+id/pb_login"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dps_primary_200" />
+
+                <TextView
+                    android:id="@+id/tv_forgot_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dps_secondary_100"
+                    android:clickable="true"
+                    android:focusable="auto"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:text="Forgot password?"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:textSize="@dimen/fs_secondary_200" />
 
                 <TextView
                     android:id="@+id/tv_to_register"
@@ -134,8 +163,8 @@
                     android:focusable="auto"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
-                    android:labelFor="@id/et_password_register"
-                    android:padding="@dimen/dps_primary_100"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingBottom="@dimen/padding_small"
                     android:text="No account yet? Register!"
                     android:textSize="@dimen/fs_secondary_200" />
 

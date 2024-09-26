@@ -75,9 +75,16 @@ public class ButtonClickManager implements View.OnClickListener{
 
     private void calculateResult() {
         try {
-            String result = String.valueOf(eval(input.toString()));
+            final String result = String.valueOf(eval(input.toString()));
+            String formattedResult = result;
+
+            if(result.endsWith(".0")) {
+                formattedResult = result.substring(0, result.length() - 2);
+            }
+
             input.setLength(0);
-            input.append(result);
+            input.append(formattedResult);
+
             resultTextView.setText(input);
         }
         catch (Exception e) {
@@ -88,9 +95,7 @@ public class ButtonClickManager implements View.OnClickListener{
 
     private double eval(String expression) {
         try {
-            double result = MathEvaluator.evaluateExpression(expression);
-            return result;
-
+            return MathEvaluator.evaluateExpression(expression);
         } catch (Exception e) {
             throw new RuntimeException("Error evaluating expression", e);
         }

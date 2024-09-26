@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         if(flipCardResult == FlipCardManager.FOUND_SELECTED_WORD) {
             new Handler().postDelayed(() -> {
                 // After the delay, show the toast and open the CalculatorActivity
-                Toast.makeText(this, "Selected word was found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Code word was found", Toast.LENGTH_SHORT).show();
                 Intent openCalcu = new Intent(MainActivity.this, CalculatorActivity.class);
                 startActivity(openCalcu);
             }, 500);
