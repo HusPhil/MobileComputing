@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         handleUserNotLoggedIn();
-        setupCardGrid();
         showCurrentUserName();
+        setupCardGrid();
     }
 
     @Override
@@ -196,10 +196,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
     }
 
 
@@ -233,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Code word was found", Toast.LENGTH_SHORT).show();
                 Intent openCalcu = new Intent(MainActivity.this, CalculatorActivity.class);
                 startActivity(openCalcu);
+                flipCardManager.flipCardsToReset(cardGridAdapter);
             }, 500);
         }
     }
@@ -251,9 +248,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(openLoginActivity);
         }
     }
-
-
-
-
 
 }

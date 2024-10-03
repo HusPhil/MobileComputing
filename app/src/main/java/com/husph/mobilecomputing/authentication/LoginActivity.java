@@ -57,12 +57,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_login;
     private Button btn_login_google;
     private TextView tv_to_register;
+    private TextView tv_forgot_pass;
     private EditText et_email_login;
     private EditText et_password_login;
     private ProgressBar pb_login;
 
     GoogleSignInClient googleSignInClient ;
-
 
     private SharedPreferences loginPrefs;
     private SharedPreferences.Editor loginPrefsEditor;
@@ -276,6 +276,25 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
+    private void tv_forgot_pass_OnClickEvent() {
+        final String email = et_email_login.getText().toString().trim();
+
+        if(!FormValidation.isValidEmail(email)) {
+            Toast.makeText(this, "Please enter your valid email.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Password reset sent to: " + email, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+    }
     private void tv_to_register_OnClickEvent() {
         Toast.makeText(
                 LoginActivity.this,
@@ -286,7 +305,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(openRegisterScreen);
         InitializeComponents();
     }
-
 
     private void InitializeComponents() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -359,13 +377,18 @@ public class LoginActivity extends AppCompatActivity {
                 }
         );
 
+        tv_forgot_pass = findViewById(R.id.tv_forgot_pass);
+        tv_forgot_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tv_forgot_pass_OnClickEvent();
+            }
+        });
+
         et_email_login = findViewById(R.id.et_email_login);
         et_password_login = findViewById(R.id.et_password_login);
 
 
     }
-
-
-
 
 }

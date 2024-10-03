@@ -17,6 +17,7 @@
     <dimen name="dps_primary_100">32dp</dimen>
     <dimen name="dps_primary_200">16dp</dimen>
     <dimen name="dps_secondary_100">10dp</dimen>
+    <dimen name="fs_AC">17sp</dimen>
 
 
 </resources>

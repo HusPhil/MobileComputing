@@ -1,17 +1,25 @@
 package com.husph.mobilecomputing.calculator;
 
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.husph.mobilecomputing.R;
+
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
 
 public class ButtonClickManager implements View.OnClickListener{
 
     StringBuilder input;
     TextView resultTextView;
+    AppCompatActivity activity;
 
-    public ButtonClickManager(TextView resultTextView) {
+    public ButtonClickManager(AppCompatActivity activity, TextView resultTextView) {
+        this.activity = activity;
         this.resultTextView = resultTextView;
         input = new StringBuilder();
     }
@@ -29,20 +37,20 @@ public class ButtonClickManager implements View.OnClickListener{
             selectedButtonId == R.id.btn_num6 ||
             selectedButtonId == R.id.btn_num7 ||
             selectedButtonId == R.id.btn_num8 ||
-            selectedButtonId == R.id.btn_num9 )
+            selectedButtonId == R.id.btn_num9)
         {
 
             Button numberButton = (Button) view;
-
             String numberText = numberButton.getText().toString();
 
-            if(input.length() != 0 && input.charAt(0) == '0') {
+            if(input.length() == 1 && input.charAt(0) == '0') {
                 input.setLength(0);
             }
+
             input.append(numberText);
             resultTextView.setText(input.toString());
-            return;
 
+            return;
         }
 
         if (selectedButtonId == R.id.btn_add) {
@@ -54,23 +62,34 @@ public class ButtonClickManager implements View.OnClickListener{
         } else if (selectedButtonId == R.id.btn_divide) {
             resultTextView.setText(input.append(" / "));
         } else if (selectedButtonId == R.id.btn_backspace) {
-            if (input.length() <= 1) {
-                input.setLength(0);
-                resultTextView.setText(input.append("0"));
-                return;
-            }
-            resultTextView.setText(input.deleteCharAt(input.length() - 1).toString());
+            backSpace();
         } else if (selectedButtonId == R.id.btn_clearAll) {
-            resultTextView.setText(input.append(" / "));
-        } else if (selectedButtonId == R.id.btn_percent) {
-            resultTextView.setText(input.append(" / "));
+            clearAll();
+        } else if (selectedButtonId == R.id.btn_exit) {
+            activity.finish();
         } else if (selectedButtonId == R.id.btn_doubleZero) {
-            resultTextView.setText(input.append(" / "));
+            resultTextView.setText(input.append("00"));
+        } else if (selectedButtonId == R.id.btn_decimalPoint) {
+            resultTextView.setText(input.append("."));
         } else if (selectedButtonId == R.id.btn_equal) {
             calculateResult();
         }
 
 
+    }
+
+    private void clearAll() {
+        input.setLength(0);
+        resultTextView.setText(input.append("0"));
+    }
+
+    private void backSpace() {
+        if (input.length() <= 1) {
+            input.setLength(0);
+            resultTextView.setText(input.append("0"));
+            return;
+        }
+        resultTextView.setText(input.deleteCharAt(input.length() - 1).toString());
     }
 
     private void calculateResult() {
@@ -95,7 +114,12 @@ public class ButtonClickManager implements View.OnClickListener{
 
     private double eval(String expression) {
         try {
-            return MathEvaluator.evaluateExpression(expression);
+
+            Context context = Context.enter();
+            context.setOptimizationLevel(-1);
+            Scriptable scriptable = context.initSafeStandardObjects();
+            return (double) context.evaluateString(scriptable, expression, "Javascript", 1, null);
+
         } catch (Exception e) {
             throw new RuntimeException("Error evaluating expression", e);
         }

@@ -101,7 +101,7 @@ public class FlipCardManager {
         return NOT_FOUND_SELECTED_WORD;
     }
 
-    private void flipCardsToReset(CardGridAdapter cardGridAdapter) {
+    public void flipCardsToReset(CardGridAdapter cardGridAdapter) {
         for (int i = 0; i < letterCards.size(); i++) {
             LetterCard letterCard = letterCards.get(i);
             if(letterCard.getIsFaceUp()) {
