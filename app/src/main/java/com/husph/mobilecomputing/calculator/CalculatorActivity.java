@@ -1,5 +1,6 @@
 package com.husph.mobilecomputing.calculator;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ public class CalculatorActivity extends AppCompatActivity {
     TextView tv_result;
     int[] buttonIds;
     ButtonClickManager buttonClickManager;
+    private SharedPreferences calcHistoryPrefs;
+    private SharedPreferences.Editor calcHistoryPrefsEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +38,23 @@ public class CalculatorActivity extends AppCompatActivity {
 
         tv_result = findViewById(R.id.tv_result);
 
+        calcHistoryPrefs = getSharedPreferences("CalcHistoryPrefs", MODE_PRIVATE);
+        calcHistoryPrefsEditor = calcHistoryPrefs.edit();
+
         buttonIds = new int[]{
                 R.id.btn_num0, R.id.btn_num1, R.id.btn_num2, R.id.btn_num3,
                 R.id.btn_num4, R.id.btn_num5, R.id.btn_num6, R.id.btn_num7,
                 R.id.btn_num8, R.id.btn_num9, R.id.btn_add, R.id.btn_doubleZero,
                 R.id.btn_subtract, R.id.btn_multiply, R.id.btn_divide, R.id.btn_decimalPoint,
-                R.id.btn_equal, R.id.btn_clearAll, R.id.btn_exit, R.id.btn_backspace
+                R.id.btn_equal, R.id.btn_clearAll, R.id.btn_exit, R.id.btn_backspace,
+                R.id.btn_enterInput, R.id.btn_keyboard, R.id.btn_history
         };
 
-        buttonClickManager = new ButtonClickManager(this, tv_result);
+        buttonClickManager = new ButtonClickManager(this, tv_result, calcHistoryPrefs, calcHistoryPrefsEditor);
 
         for (int buttonId : buttonIds) {
             findViewById(buttonId).setOnClickListener(buttonClickManager);
         }
-
 
     }
 }

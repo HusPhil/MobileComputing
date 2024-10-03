@@ -198,8 +198,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private void setupCardGrid() {
         rv_card_grid = findViewById(R.id.rv_card_grid);
         letterCards = flipCardManager.getLetterCards();
