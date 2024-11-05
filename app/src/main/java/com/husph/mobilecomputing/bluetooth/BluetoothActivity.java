@@ -40,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -115,6 +116,18 @@ public class BluetoothActivity extends AppCompatActivity {
             return;
         }
         pairedDevices = bluetoothAdapter.getBondedDevices();
+        ArrayList<String> deviceList = new ArrayList<>();
+
+        if (!pairedDevices.isEmpty()) {
+            // There are paired devices. Get the name and address of each paired device.
+            for (BluetoothDevice device : pairedDevices) {
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress(); // MAC address
+                deviceList.add(deviceName + " :: " + deviceHardwareAddress);
+            }
+        }
+        deviceListAdapter.clear();
+        deviceListAdapter.addAll(deviceList);
     }
 
     private void toggleBluetooth(boolean isChecked) {
