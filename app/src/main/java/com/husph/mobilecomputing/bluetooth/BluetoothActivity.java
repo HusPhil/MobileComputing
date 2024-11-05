@@ -47,11 +47,13 @@ import java.util.UUID;
 public class BluetoothActivity extends AppCompatActivity {
 
     private static final int REQUEST_ENABLE_BT = 1;
+    private static final String TAG = "BluetoothActivity";
     BluetoothManager bluetoothManager;
     BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> deviceListAdapter;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     Set<BluetoothDevice> pairedDevices;
+    String discoveredDevice;
 
     Switch sw_toggleBluetooth;
 
@@ -68,9 +70,42 @@ public class BluetoothActivity extends AppCompatActivity {
         });
 
         InitializeComponents();
+
+
     }
 
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                Toast.makeText(context, "Discovery Started", Toast.LENGTH_SHORT).show();
+            }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                Toast.makeText(context, "Discovery Finished", Toast.LENGTH_SHORT).show();
+            }
+            else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (device != null) {
+                    try {
+                        String deviceName = device.getName();
+                        String deviceHardwareAddress = device.getAddress(); // MAC address
+                        String deviceInfo = (deviceName != null ? deviceName : "Unknown") + " :: " + deviceHardwareAddress;
+                        runOnUiThread(() -> {
+                            deviceListAdapter.insert(deviceInfo, 0);  // Insert at position 0 (top)
+                            deviceListAdapter.notifyDataSetChanged();
+                        });
+                    } catch (SecurityException e) {
+                        Log.e(TAG, "Security Exception: " + e.getMessage());
+                    }
+                }
+            }
+        }
+    };
+
     private void InitializeComponents() {
+
+
         bluetoothManager = getSystemService(BluetoothManager.class);
         bluetoothAdapter = bluetoothManager.getAdapter();
 
@@ -107,6 +142,12 @@ public class BluetoothActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        registerReceiver(receiver, filter);
     }
 
     private void btn_discoverDevices_OnClickListener() {
@@ -115,8 +156,27 @@ public class BluetoothActivity extends AppCompatActivity {
             requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
             return;
         }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_SCAN);
+            return;
+        }
+        if (bluetoothAdapter.isDiscovering()) {
+            bluetoothAdapter.cancelDiscovery();
+        }
+
+        boolean discover = bluetoothAdapter.startDiscovery();
+
+        Toast.makeText(this, "Scanning: " + discover, Toast.LENGTH_SHORT).show();
+
         pairedDevices = bluetoothAdapter.getBondedDevices();
         ArrayList<String> deviceList = new ArrayList<>();
+
+
+
+//        if (!discoveredDevice.isEmpty()) {
+//            deviceList.add(discoveredDevice);
+//        }
 
         if (!pairedDevices.isEmpty()) {
             // There are paired devices. Get the name and address of each paired device.
@@ -167,5 +227,11 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        unregisterReceiver(receiver);
+//    }
 
 }

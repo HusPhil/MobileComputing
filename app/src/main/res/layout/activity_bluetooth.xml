@@ -36,25 +36,28 @@
             android:layout_height="wrap_content"
             android:text="Bluetooth"
             android:layout_marginRight="@dimen/padding_large"
-            android:layout_marginLeft="@dimen/padding_large"/>
+            android:layout_marginLeft="@dimen/padding_large"
+            android:layout_marginBottom="@dimen/padding_medium"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="@dimen/padding_large"
-            android:layout_marginBottom="@dimen/dps_primary_100"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_large"
+            android:layout_marginRight="@dimen/padding_large"
+            android:layout_marginBottom="@dimen/padding_medium"
             app:cardCornerRadius="@dimen/padding_small"
             android:layout_gravity="center"
             android:foregroundGravity="center">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding_small"
+                android:paddingBottom="@dimen/padding_small">
                 <TextView
                     android:id="@+id/tv_fileNameInTransfer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/padding_large"
                     android:layout_marginRight="@dimen/padding_medium"
                     android:layout_marginLeft="@dimen/padding_medium"
                     android:fontFamily="@font/poppins"
@@ -83,7 +86,6 @@
             android:id="@+id/btn_discoverDevices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_small"
             android:text="Discover Devices"
             android:textSize="@dimen/fs_secondary_200" />
 
