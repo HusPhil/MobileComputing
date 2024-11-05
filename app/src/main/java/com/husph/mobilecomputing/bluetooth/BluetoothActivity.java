@@ -7,20 +7,24 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -43,37 +47,49 @@ import androidx.core.view.WindowInsetsCompat;
 import com.husph.mobilecomputing.MainActivity;
 import com.husph.mobilecomputing.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
 public class BluetoothActivity extends AppCompatActivity {
 
-    private static final int REQUEST_ENABLE_BT = 1;
     private static final String TAG = "BluetoothActivity";
+
+    private static final int REQUEST_ENABLE_BT = 1;
+    private static final int SELECT_FILE_URI = 2;
+    private static final int REQUEST_PERMISSION_CODE = 3 ;
+
     BluetoothManager bluetoothManager;
     BluetoothAdapter bluetoothAdapter;
-    private DeviceAdapter deviceListAdapter;
-    private ActivityResultLauncher<String> requestPermissionLauncher;
     BluetoothDevice[] pairedDevices;
+    DeviceAdapter deviceListAdapter;
+    SendReceive sendReceive;
+    ActivityResultLauncher<String> requestPermissionLauncher;
 
     Switch sw_toggleBluetooth;
     TextView tv_bluetoothStatus;
     Button btn_receiveFile;
+    Button btn_sendFile;
+    EditText et_btMessage;
+    TextView tv_aboutBluetooth;
+    byte[] fileAsBytes;
 
+    static final int STATE_DISCONNECTED = 0;
     static final int STATE_LISTENING = 1;
     static final int STATE_CONNECTING=2;
     static final int STATE_CONNECTED=3;
     static final int STATE_CONNECTION_FAILED=4;
     static final int STATE_MESSAGE_RECEIVED=5;
-
-
-    int REQUEST_ENABLE_BLUETOOTH=1;
 
     private static final String APP_NAME = "BTChat";
     private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
@@ -104,6 +120,11 @@ public class BluetoothActivity extends AppCompatActivity {
         sw_toggleBluetooth = findViewById(R.id.sw_toggleBluetooth);
 
         tv_bluetoothStatus = findViewById(R.id.tv_bluetoothStatus);
+        tv_aboutBluetooth = findViewById(R.id.tv_aboutBluetooth);
+        tv_aboutBluetooth.setOnClickListener(v-> {
+            Toast.makeText(this, "WRITING", Toast.LENGTH_SHORT).show();
+            writeBytesToFile(fileAsBytes, "BLUETOOTHTEST.jpg");
+        });
 
         btn_receiveFile = findViewById(R.id.btn_receiveFile);
         btn_receiveFile.setOnClickListener(v -> {
@@ -116,7 +137,12 @@ public class BluetoothActivity extends AppCompatActivity {
             btn_discoverDevices_OnClickListener();
         });
 
-        Button btn_sendFile = findViewById(R.id.btn_sendFile);
+        btn_sendFile = findViewById(R.id.btn_sendFile);
+        btn_sendFile.setOnClickListener(v -> {
+            btn_sendFile_OnClickListener();
+        });
+
+        et_btMessage = findViewById(R.id.et_btMessage);
 
         ListView listDevices = findViewById(R.id.lv_pairedDevices);
 
@@ -163,6 +189,80 @@ public class BluetoothActivity extends AppCompatActivity {
 
     }
 
+    private void btn_sendFile_OnClickListener() {
+
+        if (
+        ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+        ) {
+            Toast.makeText(this, "Permission needed", Toast.LENGTH_SHORT).show();
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+            return;
+        }
+        else if ((ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.READ_MEDIA_AUDIO) != PackageManager.PERMISSION_GRANTED)
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+            ActivityCompat.requestPermissions(this, new String[] {
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_AUDIO
+            }, REQUEST_PERMISSION_CODE);
+            return;
+        }
+
+        Intent openFileDialog = new Intent();
+        openFileDialog.setAction(Intent.ACTION_GET_CONTENT);
+        openFileDialog.setType("*/*");
+        startActivityForResult(openFileDialog, SELECT_FILE_URI);
+
+    }
+
+    public byte[] getFileBytesFromUri(Context context, Uri uri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try (InputStream inputStream = contentResolver.openInputStream(uri)) {
+            if (inputStream == null) {
+                return null;  // Handle case where inputStream couldn't be opened
+            }
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void writeBytesToFile(byte[] data, String fileName) {
+        // Define the directory where you want to save the file
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "MyAppFiles");
+
+        // Ensure the directory exists
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
+        }
+
+        // Create the file object with the given filename
+        File file = new File(storageDir, fileName);
+
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(data);
+            fos.flush();
+            System.out.println("File written successfully: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void listDevices_OnItemClickListener(int i) {
         // Check if the clicked item is a header
         int adjustedIndex = 0;
@@ -186,9 +286,13 @@ public class BluetoothActivity extends AppCompatActivity {
 
         adjustedIndex = i - pairedDeviceListIndexStart - 1;
 
-//         Retrieve the actual BluetoothDevice
         BluetoothDevice selectedDevice = pairedDevices[adjustedIndex];
-        Toast.makeText(this, "Clicked: " + selectedDevice.getName(), Toast.LENGTH_SHORT).show();
+
+        ClientClass clientClass = new ClientClass(selectedDevice);
+        clientClass.start();
+
+        tv_bluetoothStatus.setText("Status: Connecting");
+
     }
 
     private void btn_receiveFile_OnClickListener() {
@@ -266,6 +370,17 @@ public class BluetoothActivity extends AppCompatActivity {
         deviceListAdapter.addAll(deviceList);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_FILE_URI && resultCode == RESULT_OK) {
+            String fileUriString = String.valueOf(data.getData());
+            Uri fileUri = Uri.parse(fileUriString);
+            et_btMessage.setText(String.valueOf(fileUri));
+            fileAsBytes = getFileBytesFromUri(this, fileUri);
+        }
+    }
+
     private void toggleBluetooth(boolean isChecked) {
         if (isChecked) {
             enableBluetooth();
@@ -278,6 +393,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 return;
             }
             bluetoothAdapter.disable();
+            tv_bluetoothStatus.setText("Status: Disconnected");
             Toast.makeText(this, "Bluetooth disabled", Toast.LENGTH_SHORT).show();
         }
     }
@@ -325,7 +441,12 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
 
                 case STATE_MESSAGE_RECEIVED:
-                    //later
+                    byte[] readBuff = (byte[]) message.obj;
+
+                    String tmpMessage = new String(readBuff, 0, message.arg1);
+                    Toast.makeText(BluetoothActivity.this, tmpMessage, Toast.LENGTH_SHORT).show();
+
+
                     break;
             }
 
@@ -333,51 +454,52 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     });
 
-    class ServerClass extends Thread {
+    private class ServerClass extends Thread
+    {
         private BluetoothServerSocket serverSocket;
 
-        public ServerClass() {
+        public ServerClass(){
             try {
                 if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
                     return;
                 }
-                serverSocket = bluetoothAdapter.listenUsingRfcommWithServiceRecord(APP_NAME, MY_UUID);
-            }
-            catch (IOException e) {
-                Log.e(TAG, "Socket's listen() method failed", e);
-                Message message = Message.obtain();
-                message.what = STATE_CONNECTION_FAILED;
-                handler.sendMessage(message);
+                serverSocket=bluetoothAdapter.listenUsingRfcommWithServiceRecord(APP_NAME,MY_UUID);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
-        public void run() {
-            BluetoothSocket socket = null;
+        public void run()
+        {
+            BluetoothSocket socket=null;
 
-            while(socket == null) {
+            while (socket==null)
+            {
                 try {
-                    Message message = Message.obtain();
-                    message.what = STATE_LISTENING;
+                    Message message=Message.obtain();
+                    message.what=STATE_CONNECTING;
                     handler.sendMessage(message);
 
-                    socket = serverSocket.accept();
-                }
-                catch (IOException e) {
-                    Log.e(TAG, "Socket's listen() method failed", e);
-                    Message message = Message.obtain();
-                    message.what = STATE_CONNECTION_FAILED;
+                    socket=serverSocket.accept();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Message message=Message.obtain();
+                    message.what=STATE_CONNECTION_FAILED;
                     handler.sendMessage(message);
                 }
 
-                if(socket != null) {
-                    Message message = Message.obtain();
-                    message.what = STATE_CONNECTED;
+                if(socket!=null)
+                {
+                    Message message=Message.obtain();
+                    message.what=STATE_CONNECTED;
                     handler.sendMessage(message);
+
+                    sendReceive = new SendReceive(socket);
+                    sendReceive.start();
+
                     break;
                 }
             }
-
         }
     }
 
@@ -385,7 +507,8 @@ public class BluetoothActivity extends AppCompatActivity {
         private BluetoothDevice device;
         private BluetoothSocket socket;
 
-        public ClientClass() {
+        public ClientClass(BluetoothDevice passedDevice) {
+            device = passedDevice;
             try {
                 if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
@@ -399,6 +522,15 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         public void run() {
+            if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_SCAN);
+                return;
+            }
+
+            if(bluetoothAdapter.isDiscovering()) {
+                bluetoothAdapter.cancelDiscovery();
+            }
+
             try {
                 if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
@@ -408,18 +540,73 @@ public class BluetoothActivity extends AppCompatActivity {
                     return;
                 }
                 socket.connect();
+                Message message = Message.obtain();
+                message.what = STATE_CONNECTED;
+                handler.sendMessage(message);
+
+                sendReceive = new SendReceive(socket);
+                sendReceive.start();
             }
             catch(IOException e) {
                 e.printStackTrace();
+                Message message = Message.obtain();
+                message.what = STATE_CONNECTION_FAILED;
+                handler.sendMessage(message);
             }
         }
 
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        unregisterReceiver(receiver);
-//    }
+    class SendReceive extends Thread {
+        private final BluetoothSocket bluetoothSocket;
+        private final InputStream inputStream;
+        private final OutputStream outputStream;
+
+        public SendReceive(BluetoothSocket socket) {
+            bluetoothSocket = socket;
+
+            InputStream tmpInputStream = null;
+            OutputStream tmpOutputStream = null;
+
+            try {
+                tmpInputStream = bluetoothSocket.getInputStream();
+                tmpOutputStream = bluetoothSocket.getOutputStream();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            inputStream = tmpInputStream;
+            outputStream = tmpOutputStream;
+        }
+
+        public void run() {
+            byte[] buffer = new byte[1024];
+            int bytes;
+
+            while(true) {
+                try {
+                    bytes = inputStream.read(buffer);
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public void write(byte[] bytes) {
+            try {
+                outputStream.write(bytes);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
 
 }
