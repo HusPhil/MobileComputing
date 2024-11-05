@@ -263,6 +263,17 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
+    private byte[] readFileBytes(File file) throws IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        int numRead;
+        FileInputStream fis = new FileInputStream(file);
+        while ((numRead = fis.read(buf)) != -1) {
+            bos.write(buf, 0, numRead);
+        }
+        return bos.toByteArray();
+    }
+
     private void listDevices_OnItemClickListener(int i) {
         // Check if the clicked item is a header
         int adjustedIndex = 0;
@@ -373,13 +384,21 @@ public class BluetoothActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == SELECT_FILE_URI && resultCode == RESULT_OK) {
-            String fileUriString = String.valueOf(data.getData());
-            Uri fileUri = Uri.parse(fileUriString);
-            et_btMessage.setText(String.valueOf(fileUri));
-            fileAsBytes = getFileBytesFromUri(this, fileUri);
+
+        if (requestCode == SELECT_FILE_URI && resultCode == RESULT_OK && data != null) {
+            Uri fileUri = data.getData();
+            if (fileUri != null) {
+                fileAsBytes = getFileBytesFromUri(this, fileUri); // Convert the file to bytes
+                if (fileAsBytes != null && sendReceive != null) {
+                    sendReceive.write(fileAsBytes); // Send bytes over Bluetooth
+                    Toast.makeText(this, "File sent successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Failed to send file", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
+
 
     private void toggleBluetooth(boolean isChecked) {
         if (isChecked) {
@@ -441,12 +460,11 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
 
                 case STATE_MESSAGE_RECEIVED:
-                    byte[] readBuff = (byte[]) message.obj;
-
-                    String tmpMessage = new String(readBuff, 0, message.arg1);
-                    Toast.makeText(BluetoothActivity.this, tmpMessage, Toast.LENGTH_SHORT).show();
-
-
+                    byte[] fileData = (byte[]) message.obj;
+                    // Define your file name and call your existing writeBytesToFile() function
+                    String fileName = "ReceivedFile.jpg"; // Define an appropriate name or get from metadata
+                    writeBytesToFile(fileData, fileName);
+                    Toast.makeText(BluetoothActivity.this, "File received and saved", Toast.LENGTH_SHORT).show();
                     break;
             }
 
@@ -580,18 +598,26 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         public void run() {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024];
             int bytes;
 
-            while(true) {
+            while (true) {
                 try {
                     bytes = inputStream.read(buffer);
-                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
+                    if (bytes == -1) break; // End of stream
+                    byteArrayOutputStream.write(buffer, 0, bytes); // Collect bytes
+
+                    // Save bytes to file after transfer completes
+                    byte[] fileBytes = byteArrayOutputStream.toByteArray();
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, fileBytes.length, -1, fileBytes).sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
         }
+
 
         public void write(byte[] bytes) {
             try {
