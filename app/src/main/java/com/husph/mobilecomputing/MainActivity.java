@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.husph.mobilecomputing.authentication.LoginActivity;
 import com.husph.mobilecomputing.authentication.UserProfileActivity;
+import com.husph.mobilecomputing.bluetooth.BluetoothActivity;
 import com.husph.mobilecomputing.calculator.ButtonClickManager;
 import com.husph.mobilecomputing.calculator.CalculatorActivity;
 import com.husph.mobilecomputing.models.FlipCardManager;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rv_card_grid;
     TextView tv_currentUser;
     MaterialToolbar tb_mainAct;
+    ImageButton btn_launchBluetooth;
 
     private String selectedWord = "Hello World".trim().replaceAll("\\s", "").toUpperCase();
     private FlipCardManager flipCardManager;
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         handleUserNotLoggedIn();
-        showCurrentUserName();
+//        showCurrentUserName();
         setupCardGrid();
     }
 
@@ -119,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startActivity(openUserProfileActivity);
+    }
+
+    private void btn_launchBluetooth_OnClickEvent() {
+        Intent openBluetoothActivity = new Intent(MainActivity.this, BluetoothActivity.class);
+        startActivity(openBluetoothActivity);
     }
 
     private void showLogOutDialog() {
@@ -193,6 +201,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tbNavigation_OnClickEvent();
+            }
+        });
+
+        btn_launchBluetooth = findViewById(R.id.btn_launchBluetooth);
+        btn_launchBluetooth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_launchBluetooth_OnClickEvent();
             }
         });
 

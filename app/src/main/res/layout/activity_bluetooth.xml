@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bluetooth.BluetoothActivity">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_bluetoothTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_medium"
+            android:fontFamily="@font/poppins_semibold"
+            android:textAlignment="center"
+            android:text="Bluetooth File Transfer!"
+            android:layout_marginBottom="@dimen/padding_large"
+            android:textSize="@dimen/fs_primary_200" />
+
+        <Switch
+            android:id="@+id/sw_toggleBluetooth"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Bluetooth"
+            android:layout_marginRight="@dimen/padding_large"
+            android:layout_marginLeft="@dimen/padding_large"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="@dimen/padding_large"
+            android:layout_marginBottom="@dimen/dps_primary_100"
+            app:cardCornerRadius="@dimen/padding_small"
+            android:layout_gravity="center"
+            android:foregroundGravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fileNameInTransfer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_large"
+                    android:layout_marginRight="@dimen/padding_medium"
+                    android:layout_marginLeft="@dimen/padding_medium"
+                    android:fontFamily="@font/poppins"
+                    android:text="No file currently in transfer!"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/fs_secondary_100" />
+
+
+
+                <ProgressBar
+                    android:id="@+id/pb_fileTransferProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_large"
+                    android:layout_marginRight="@dimen/padding_large"
+                    android:layout_marginTop="@dimen/padding_medium"/>
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_discoverDevices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:text="Discover Devices"
+            android:textSize="@dimen/fs_secondary_200" />
+
+        <ListView
+            android:id="@+id/lv_availableDevices"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="@dimen/padding_medium"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="@dimen/padding_medium"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_medium">
+
+            <Button
+                android:id="@+id/btn_sendFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/fs_secondary_200"
+                android:text="Send File" />
+
+            <Button
+                android:id="@+id/btn_receiveFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/fs_secondary_200"
+                android:text="Receive File" />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_aboutBluetooth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="Learn more about bluetooth here!"
+            android:textAlignment="center"
+            android:textSize="@dimen/fs_secondary_100" />
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

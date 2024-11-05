@@ -203,8 +203,6 @@ public class ButtonClickManager implements View.OnClickListener {
         historyAlertBuilder.create().show();
     }
 
-
-
     private void clearAll() {
         input.setLength(0);
         resultTextView.setText(input.append("0"));
@@ -278,7 +276,6 @@ public class ButtonClickManager implements View.OnClickListener {
 
         return expression;
     }
-
 
     private void saveToHistory(String entry) {
         calcHistory.add(entry);
