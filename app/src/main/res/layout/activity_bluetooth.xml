@@ -46,49 +46,6 @@
                 android:layout_gravity="center"
                 android:text="Bluetooth" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/padding_large"
-                android:layout_marginRight="@dimen/padding_large"
-                android:layout_marginBottom="@dimen/padding_medium"
-                android:foregroundGravity="center"
-                app:cardCornerRadius="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/padding_small"
-                    android:paddingBottom="@dimen/padding_small">
-
-                    <TextView
-                        android:id="@+id/tv_fileNameInTransfer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_medium"
-                        android:layout_marginRight="@dimen/padding_medium"
-                        android:fontFamily="@font/poppins"
-                        android:text="No file currently in transfer!"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/fs_secondary_100" />
-
-
-                    <ProgressBar
-                        android:id="@+id/pb_fileTransferProgress"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_large"
-                        android:layout_marginTop="@dimen/padding_medium"
-                        android:layout_marginRight="@dimen/padding_large" />
-
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
             <Button
                 android:id="@+id/btn_discoverDevices"
                 android:layout_width="wrap_content"
@@ -101,7 +58,7 @@
             <ListView
                 android:id="@+id/lv_pairedDevices"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_margin="@dimen/padding_medium" />
 
 

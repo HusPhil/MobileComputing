@@ -1,6 +1,7 @@
 package com.husph.mobilecomputing.bluetooth;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -263,17 +265,6 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    private byte[] readFileBytes(File file) throws IOException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-        int numRead;
-        FileInputStream fis = new FileInputStream(file);
-        while ((numRead = fis.read(buf)) != -1) {
-            bos.write(buf, 0, numRead);
-        }
-        return bos.toByteArray();
-    }
-
     private void listDevices_OnItemClickListener(int i) {
         // Check if the clicked item is a header
         int adjustedIndex = 0;
@@ -388,17 +379,11 @@ public class BluetoothActivity extends AppCompatActivity {
         if (requestCode == SELECT_FILE_URI && resultCode == RESULT_OK && data != null) {
             Uri fileUri = data.getData();
             if (fileUri != null) {
-                fileAsBytes = getFileBytesFromUri(this, fileUri); // Convert the file to bytes
-                if (fileAsBytes != null && sendReceive != null) {
-                    sendReceive.write(fileAsBytes); // Send bytes over Bluetooth
-                    Toast.makeText(this, "File sent successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Failed to send file", Toast.LENGTH_SHORT).show();
-                }
+                // Use AsyncTask to convert and send the file asynchronously
+                new ConvertAndSendFileTask(this).execute(fileUri);
             }
         }
     }
-
 
     private void toggleBluetooth(boolean isChecked) {
         if (isChecked) {
@@ -628,6 +613,69 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
     }
+
+    private class ConvertAndSendFileTask extends AsyncTask<Uri, Integer, Void> {
+        private final Context context;
+        private ProgressDialog progressDialog;
+
+        public ConvertAndSendFileTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // Initialize the progress dialog
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setTitle("Sending File");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(0);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Uri... uris) {
+            Uri fileUri = uris[0];
+            byte[] fileBytes = getFileBytesFromUri(context, fileUri);
+
+            if (fileBytes != null && sendReceive != null) {
+                int totalBytes = fileBytes.length;
+                int bytesSent = 0;
+                int chunkSize = 1024; // Send in 1 KB chunks
+
+                // Send file in chunks
+                while (bytesSent < totalBytes) {
+                    int remainingBytes = totalBytes - bytesSent;
+                    int currentChunkSize = Math.min(chunkSize, remainingBytes);
+
+                    byte[] chunk = new byte[currentChunkSize];
+                    System.arraycopy(fileBytes, bytesSent, chunk, 0, currentChunkSize);
+
+                    sendReceive.write(chunk); // Send the current chunk
+                    bytesSent += currentChunkSize;
+
+                    // Calculate and publish progress
+                    int progress = (int) ((bytesSent / (float) totalBytes) * 100);
+                    publishProgress(progress);
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+            // Update progress dialog
+            progressDialog.setProgress(progress[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            Toast.makeText(context, "File sent successfully", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     protected void onDestroy() {
