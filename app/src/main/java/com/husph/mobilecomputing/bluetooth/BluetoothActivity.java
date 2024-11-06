@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +60,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,10 +84,12 @@ public class BluetoothActivity extends AppCompatActivity {
 
     Switch sw_toggleBluetooth;
     TextView tv_bluetoothStatus;
+    TextView tv_fileName;
     Button btn_receiveFile;
     Button btn_sendFile;
     EditText et_btMessage;
     TextView tv_aboutBluetooth;
+    ProgressBar pb_transferProgress;
     byte[] fileAsBytes;
 
     static final int STATE_DISCONNECTED = 0;
@@ -133,6 +139,9 @@ public class BluetoothActivity extends AppCompatActivity {
             btn_receiveFile_OnClickListener();
         });
 
+        pb_transferProgress = findViewById(R.id.pb_transferProgress);
+        tv_fileName = findViewById(R.id.tv_fileName);
+
 
         Button btn_discoverDevices = findViewById(R.id.btn_discoverDevices);
         btn_discoverDevices.setOnClickListener(v -> {
@@ -143,8 +152,6 @@ public class BluetoothActivity extends AppCompatActivity {
         btn_sendFile.setOnClickListener(v -> {
             btn_sendFile_OnClickListener();
         });
-
-        et_btMessage = findViewById(R.id.et_btMessage);
 
         ListView listDevices = findViewById(R.id.lv_pairedDevices);
 
@@ -188,7 +195,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
         btn_discoverDevices_OnClickListener();
 
-
     }
 
     private void btn_sendFile_OnClickListener() {
@@ -211,6 +217,12 @@ public class BluetoothActivity extends AppCompatActivity {
                     Manifest.permission.READ_MEDIA_VIDEO,
                     Manifest.permission.READ_MEDIA_AUDIO
             }, REQUEST_PERMISSION_CODE);
+            return;
+        }
+
+        // If we're not connected, show error
+        if (sendReceive == null) {
+            Toast.makeText(this, "Not connected to a device", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -243,6 +255,31 @@ public class BluetoothActivity extends AppCompatActivity {
             return null;
         }
     }
+
+    public String getFileNameFromUri(Context context, Uri uri) {
+        String fileName = null;
+        String scheme = uri.getScheme();
+
+        if (scheme.equals("content")) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    // Try to get the display name from the content provider
+                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex != -1) {
+                        fileName = cursor.getString(nameIndex);
+                    }
+                }
+            }
+        }
+
+        if (fileName == null) {
+            // If we couldn't get the name from the content provider, try the last path segment
+            fileName = uri.getLastPathSegment();
+        }
+
+        return fileName != null ? fileName : "unknown_file";
+    }
+
 
     public void writeBytesToFile(byte[] data, String fileName) {
         // Define the directory where you want to save the file
@@ -290,6 +327,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
         BluetoothDevice selectedDevice = pairedDevices[adjustedIndex];
 
+        // Create new client connection for each transfer
         ClientClass clientClass = new ClientClass(selectedDevice);
         clientClass.start();
 
@@ -298,6 +336,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     private void btn_receiveFile_OnClickListener() {
+        // Create new server connection for each transfer
         ServerClass serverClass = new ServerClass();
         serverClass.start();
     }
@@ -445,11 +484,21 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
 
                 case STATE_MESSAGE_RECEIVED:
-                    byte[] fileData = (byte[]) message.obj;
-                    // Define your file name and call your existing writeBytesToFile() function
-                    String fileName = "ReceivedFile.jpg"; // Define an appropriate name or get from metadata
-                    writeBytesToFile(fileData, fileName);
-                    Toast.makeText(BluetoothActivity.this, "File received and saved", Toast.LENGTH_SHORT).show();
+                    FileTransferData transferData = (FileTransferData) message.obj;
+                    int fileSize = message.arg1;
+                    int progress = (int) (((float) transferData.data.length / fileSize) * 100);
+
+                    if(progress == 100) {
+//                        tv_progress.setVisibility(View.GONE);
+                        tv_fileName.setText("Transfer Complete - " + transferData.filename);
+                        writeBytesToFile(transferData.data, transferData.filename);
+                    } else {
+//                        tv_progress.setVisibility(View.VISIBLE);
+                        tv_fileName.setText(transferData.filename);
+                        pb_transferProgress.setProgress(progress);
+                    }
+//                    tv_progress.setText(progress + "%");
+
                     break;
             }
 
@@ -547,6 +596,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 message.what = STATE_CONNECTED;
                 handler.sendMessage(message);
 
+                // Create new SendReceive instance for this connection
                 sendReceive = new SendReceive(socket);
                 sendReceive.start();
             }
@@ -564,6 +614,8 @@ public class BluetoothActivity extends AppCompatActivity {
         private final BluetoothSocket bluetoothSocket;
         private final InputStream inputStream;
         private final OutputStream outputStream;
+        private long totalExpectedBytes = -1;
+        private int totalBytesReceived = 0;
 
         public SendReceive(BluetoothSocket socket) {
             bluetoothSocket = socket;
@@ -582,24 +634,51 @@ public class BluetoothActivity extends AppCompatActivity {
             outputStream = tmpOutputStream;
         }
 
+        public void setTotalExpectedBytes(long totalExpectedBytes) {
+            this.totalExpectedBytes = totalExpectedBytes;
+        }
+
         public void run() {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             byte[] buffer = new byte[1024];
             int bytes;
 
-            while (true) {
-                try {
-                    bytes = inputStream.read(buffer);
-                    if (bytes == -1) break; // End of stream
-                    byteArrayOutputStream.write(buffer, 0, bytes); // Collect bytes
+            try {
+                // First read the filename length (4 bytes)
+                byte[] filenameLengthBuffer = new byte[4];
+                bytes = inputStream.read(filenameLengthBuffer);
+                if (bytes != 4) throw new IOException("Failed to read filename length");
+                int filenameLength = ByteBuffer.wrap(filenameLengthBuffer).getInt();
 
-                    // Save bytes to file after transfer completes
-                    byte[] fileBytes = byteArrayOutputStream.toByteArray();
-                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, fileBytes.length, -1, fileBytes).sendToTarget();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    break;
+                // Then read the filename
+                byte[] filenameBuffer = new byte[filenameLength];
+                bytes = inputStream.read(filenameBuffer);
+                if (bytes != filenameLength) throw new IOException("Failed to read filename");
+                String filename = new String(filenameBuffer, StandardCharsets.UTF_8);
+
+                // Read file size as before
+                byte[] sizeBuffer = new byte[8];
+                bytes = inputStream.read(sizeBuffer);
+                if (bytes == 8) {
+                    totalExpectedBytes = ByteBuffer.wrap(sizeBuffer).getLong();
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, (int) totalExpectedBytes, -1,
+                            new FileTransferData(filename, (int) totalExpectedBytes, new byte[0])).sendToTarget();
+                } else {
+                    throw new IOException("Failed to read file size.");
                 }
+
+                // Rest of file reading remains the same
+                while (true) {
+                    bytes = inputStream.read(buffer);
+                    if (bytes == -1) break;
+                    byteArrayOutputStream.write(buffer, 0, bytes);
+
+                    byte[] fileBytes = byteArrayOutputStream.toByteArray();
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, (int) totalExpectedBytes, -1,
+                            new FileTransferData(filename, (int) totalExpectedBytes, fileBytes)).sendToTarget();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -607,6 +686,7 @@ public class BluetoothActivity extends AppCompatActivity {
         public void write(byte[] bytes) {
             try {
                 outputStream.write(bytes);
+                outputStream.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -614,9 +694,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
     }
 
-    private class ConvertAndSendFileTask extends AsyncTask<Uri, Integer, Void> {
+    private class ConvertAndSendFileTask extends AsyncTask<Uri, FileProgress, Boolean> {
         private final Context context;
-        private ProgressDialog progressDialog;
+        private String fileName;
 
         public ConvertAndSendFileTask(Context context) {
             this.context = context;
@@ -624,55 +704,100 @@ public class BluetoothActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            // Initialize the progress dialog
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setTitle("Sending File");
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(false);
-            progressDialog.setProgress(0);
-            progressDialog.show();
+            super.onPreExecute();
+            pb_transferProgress.setProgress(0);
         }
 
         @Override
-        protected Void doInBackground(Uri... uris) {
+        protected Boolean doInBackground(Uri... uris) {
             Uri fileUri = uris[0];
             byte[] fileBytes = getFileBytesFromUri(context, fileUri);
+            fileName = getFileNameFromUri(context, fileUri);
 
             if (fileBytes != null && sendReceive != null) {
-                int totalBytes = fileBytes.length;
-                int bytesSent = 0;
-                int chunkSize = 1024; // Send in 1 KB chunks
+                try {
+                    // Send filename length first
+                    byte[] filenameBytes = fileName.getBytes(StandardCharsets.UTF_8);
+                    byte[] filenameLengthBytes = ByteBuffer.allocate(4).putInt(filenameBytes.length).array();
+                    sendReceive.write(filenameLengthBytes);
 
-                // Send file in chunks
-                while (bytesSent < totalBytes) {
-                    int remainingBytes = totalBytes - bytesSent;
-                    int currentChunkSize = Math.min(chunkSize, remainingBytes);
+                    // Send filename
+                    sendReceive.write(filenameBytes);
 
-                    byte[] chunk = new byte[currentChunkSize];
-                    System.arraycopy(fileBytes, bytesSent, chunk, 0, currentChunkSize);
+                    // Send file size
+                    byte[] sizeBytes = ByteBuffer.allocate(8).putLong(fileBytes.length).array();
+                    sendReceive.write(sizeBytes);
 
-                    sendReceive.write(chunk); // Send the current chunk
-                    bytesSent += currentChunkSize;
+                    // Send file in chunks
+                    int totalBytes = fileBytes.length;
+                    int bytesSent = 0;
+                    int chunkSize = 1024;
 
-                    // Calculate and publish progress
-                    int progress = (int) ((bytesSent / (float) totalBytes) * 100);
-                    publishProgress(progress);
+                    while (bytesSent < totalBytes) {
+                        int remainingBytes = totalBytes - bytesSent;
+                        int currentChunkSize = Math.min(chunkSize, remainingBytes);
+
+                        byte[] chunk = new byte[currentChunkSize];
+                        System.arraycopy(fileBytes, bytesSent, chunk, 0, currentChunkSize);
+
+                        sendReceive.write(chunk);
+                        bytesSent += currentChunkSize;
+
+                        // Calculate progress and publish
+                        int progress = (int) ((bytesSent / (float) totalBytes) * 100);
+                        publishProgress(new FileProgress(fileName, progress));
+                    }
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
                 }
             }
-            return null;
+            return false;
         }
 
         @Override
-        protected void onProgressUpdate(Integer... progress) {
-            // Update progress dialog
-            progressDialog.setProgress(progress[0]);
+        protected void onProgressUpdate(FileProgress... values) {
+            if (values.length > 0) {
+                FileProgress progress = values[0];
+                tv_fileName.setText(progress.fileName);
+                pb_transferProgress.setProgress(progress.progress);
+            }
         }
 
         @Override
-        protected void onPostExecute(Void result) {
-            progressDialog.dismiss();
-            Toast.makeText(context, "File sent successfully", Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                tv_fileName.setText("Transfer Complete - " + fileName);
+                Toast.makeText(context, "File sent successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                tv_fileName.setText("Transfer Failed");
+                Toast.makeText(context, "Failed to send file", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    // Helper class to hold progress information
+    private static class FileProgress {
+        String fileName;
+        int progress;
+
+        FileProgress(String fileName, int progress) {
+            this.fileName = fileName;
+            this.progress = progress;
+        }
+    }
+
+    // Add this class to hold both filename and data
+    private static class FileTransferData {
+        String filename;
+        int totalExpectedBytes;
+        byte[] data;
+
+        FileTransferData(String filename, int totalExpectedBytes, byte[] data) {
+            this.filename = filename;
+            this.totalExpectedBytes = totalExpectedBytes;
+            this.data = data;
         }
     }
 
