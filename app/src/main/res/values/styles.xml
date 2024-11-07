@@ -7,4 +7,12 @@
         <item name="android:maxLines">1</item>
         <item name="marginHorizontal">@dimen/padding_small</item>
     </style>
+    <style name="MenuActivityListItem">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textSize">@dimen/fs_primary_200</item>
+        <item name="contentPadding">@dimen/padding_medium</item>
+        <item name="cornerRadius">@dimen/padding_medium</item>
+        <item name="backgroundColor">@color/red</item>
+
+    </style>
 </resources>

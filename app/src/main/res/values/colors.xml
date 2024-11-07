@@ -5,4 +5,6 @@
     <color name="green_primary">#3DDC84</color>
     <color name="orange">#FF8C00</color>
     <color name="red">#800000</color>
+    <color name="darkblue">#054456</color>
+    <color name="pageTextColor">#000</color>
 </resources>

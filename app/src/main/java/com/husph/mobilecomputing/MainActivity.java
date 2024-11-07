@@ -38,6 +38,7 @@ import com.husph.mobilecomputing.authentication.UserProfileActivity;
 import com.husph.mobilecomputing.bluetooth.BluetoothActivity;
 import com.husph.mobilecomputing.calculator.ButtonClickManager;
 import com.husph.mobilecomputing.calculator.CalculatorActivity;
+import com.husph.mobilecomputing.menu.MenuActivity;
 import com.husph.mobilecomputing.models.FlipCardManager;
 import com.husph.mobilecomputing.models.LetterCard;
 import com.husph.mobilecomputing.models.UserProfile;
@@ -62,11 +63,10 @@ public class MainActivity extends AppCompatActivity {
     private SignInAccount oneTapClient;
 
     RecyclerView rv_card_grid;
-    TextView tv_currentUser;
     MaterialToolbar tb_mainAct;
     ImageButton btn_launchBluetooth;
 
-    private String selectedWord = "Hello World".trim().replaceAll("\\s", "").toUpperCase();
+    private String selectedWord = "Helko World".trim().replaceAll("\\s", "").toUpperCase();
     private FlipCardManager flipCardManager;
     private List<LetterCard> letterCards;
 
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         handleUserNotLoggedIn();
-//        showCurrentUserName();
         setupCardGrid();
     }
 
@@ -193,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
         gson = new Gson();
         flipCardManager = new FlipCardManager(selectedWord);
 
-        tv_currentUser = findViewById(R.id.tv_currentUser);
         tb_mainAct = findViewById((R.id.tb_mainAct));
         setSupportActionBar(tb_mainAct);
 
@@ -204,13 +202,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_launchBluetooth = findViewById(R.id.btn_launchBluetooth);
-        btn_launchBluetooth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btn_launchBluetooth_OnClickEvent();
-            }
-        });
+//        btn_launchBluetooth = findViewById(R.id.btn_launchBluetooth);
+//        btn_launchBluetooth.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                btn_launchBluetooth_OnClickEvent();
+//            }
+//        });
 
     }
 
@@ -241,8 +239,8 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(() -> {
                 // After the delay, show the toast and open the CalculatorActivity
                 Toast.makeText(this, "Code word was found", Toast.LENGTH_SHORT).show();
-                Intent openCalcu = new Intent(MainActivity.this, CalculatorActivity.class);
-                startActivity(openCalcu);
+                Intent openMenu = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(openMenu);
                 flipCardManager.flipCardsToReset(cardGridAdapter);
             }, 500);
         }

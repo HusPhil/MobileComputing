@@ -1,7 +1,6 @@
 package com.husph.mobilecomputing.bluetooth;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -21,12 +20,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -34,28 +31,22 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.husph.mobilecomputing.MainActivity;
 import com.husph.mobilecomputing.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +54,6 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
@@ -130,8 +120,8 @@ public class BluetoothActivity extends AppCompatActivity {
         tv_bluetoothStatus = findViewById(R.id.tv_bluetoothStatus);
         tv_aboutBluetooth = findViewById(R.id.tv_aboutBluetooth);
         tv_aboutBluetooth.setOnClickListener(v-> {
-            Toast.makeText(this, "WRITING", Toast.LENGTH_SHORT).show();
-            writeBytesToFile(fileAsBytes, "BLUETOOTHTEST.jpg");
+            Intent openBluetoothActivity = new Intent(this, BluetoothStudyActivity.class);
+            startActivity(openBluetoothActivity);
         });
 
         btn_receiveFile = findViewById(R.id.btn_receiveFile);
@@ -694,7 +684,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
     }
 
-    private class ConvertAndSendFileTask extends AsyncTask<Uri, FileProgress, Boolean> {
+    class ConvertAndSendFileTask extends AsyncTask<Uri, FileProgress, Boolean> {
         private final Context context;
         private String fileName;
 
