@@ -38,39 +38,20 @@ public class BluetoothStudyActivity extends AppCompatActivity {
     View vwc_versions, vwc_profiles, vwc_security, vwc_wifi, vwc_mesh, vwc_ble, vwc_troubleshooting, vwc_future;
     boolean expanded_versions, expanded_profiles, expanded_security, expanded_wifi, expanded_mesh, expanded_ble, expanded_troubleshooting, expanded_future;
 
+    LinearLayout dp_whyBluetooth;
+    TextView tv_whyBluetooth;
+    View vwc_whyBluetooth;
+    boolean expanded_whyBluetooth = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_bluetooth_info);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         wv_ytInfraredVid = findViewById(R.id.wv_ytInfraredVid);
         wv_ytInfraredVid.loadData(ytVidSrc, "text/html", "utf-8");
         wv_ytInfraredVid.getSettings().setJavaScriptEnabled(true);
         wv_ytInfraredVid.setWebChromeClient(new WebChromeClient());
-
-        dp_whatIsBluetooth = findViewById(R.id.dp_whatIsBluetooth);
-        tv_whatIsBluetooth = findViewById(R.id.tv_whatIsBluetooth);
-        vwc_whatIsBluetooth = findViewById(R.id.vwc_whatIsBluetooth);
-        toggleDescription(tv_whatIsBluetooth, vwc_whatIsBluetooth, expanded_whatIsBluetooth);
-        dp_whatIsBluetooth.setOnClickListener(v -> {
-            toggleDescription(tv_whatIsBluetooth, vwc_whatIsBluetooth, expanded_whatIsBluetooth);
-            expanded_whatIsBluetooth = !expanded_whatIsBluetooth;
-        });
-
-        dp_point2 = findViewById(R.id.dp_point2);
-        tv_point2 = findViewById(R.id.tv_point2);
-        vwc_point2 = findViewById(R.id.vwc_point2);
-        toggleDescription(tv_point2, vwc_point2, expanded_point2);
-        dp_point2.setOnClickListener(v -> {
-            toggleDescription(tv_point2, vwc_point2, expanded_point2);
-            expanded_point2 = !expanded_point2;
-        });
 
         initializeViews();
         setupClickListeners();
@@ -78,6 +59,26 @@ public class BluetoothStudyActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        // What is Bluetooth
+        dp_whatIsBluetooth = findViewById(R.id.dp_whatIsBluetooth);
+        tv_whatIsBluetooth = findViewById(R.id.tv_whatIsBluetooth);
+        vwc_whatIsBluetooth = findViewById(R.id.vwc_whatIsBluetooth);
+
+        // Point 2
+        dp_point2 = findViewById(R.id.dp_point2);
+        tv_point2 = findViewById(R.id.tv_point2);
+        vwc_point2 = findViewById(R.id.vwc_point2);
+
+        // Why Bluetooth
+        dp_whyBluetooth = findViewById(R.id.dp_whyBluetooth);
+        tv_whyBluetooth = findViewById(R.id.tv_whyBluetooth);
+        vwc_whyBluetooth = findViewById(R.id.vwc_whyBluetooth);
+
+        // Set initial states
+        toggleDescription(tv_whatIsBluetooth, vwc_whatIsBluetooth, expanded_whatIsBluetooth);
+        toggleDescription(tv_point2, vwc_point2, expanded_point2);
+        toggleDescription(tv_whyBluetooth, vwc_whyBluetooth, expanded_whyBluetooth);
+        
         // Versions
         dp_versions = findViewById(R.id.dp_versions);
         tv_versions = findViewById(R.id.tv_versions);
@@ -119,6 +120,7 @@ public class BluetoothStudyActivity extends AppCompatActivity {
         vwc_future = findViewById(R.id.vwc_future);
 
         // Set initial states
+
         toggleDescription(tv_versions, vwc_versions, expanded_versions);
         toggleDescription(tv_profiles, vwc_profiles, expanded_profiles);
         toggleDescription(tv_security, vwc_security, expanded_security);
@@ -130,6 +132,24 @@ public class BluetoothStudyActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
+        // What is Bluetooth
+        dp_whatIsBluetooth.setOnClickListener(v -> {
+            toggleDescription(tv_whatIsBluetooth, vwc_whatIsBluetooth, expanded_whatIsBluetooth);
+            expanded_whatIsBluetooth = !expanded_whatIsBluetooth;
+        });
+
+        // Point 2
+        dp_point2.setOnClickListener(v -> {
+            toggleDescription(tv_point2, vwc_point2, expanded_point2);
+            expanded_point2 = !expanded_point2;
+        });
+
+        // Why Bluetooth
+        dp_whyBluetooth.setOnClickListener(v -> {
+            toggleDescription(tv_whyBluetooth, vwc_whyBluetooth, expanded_whyBluetooth);
+            expanded_whyBluetooth = !expanded_whyBluetooth;
+        });
+
         // Versions
         dp_versions.setOnClickListener(v -> {
             toggleDescription(tv_versions, vwc_versions, expanded_versions);
@@ -190,28 +210,47 @@ public class BluetoothStudyActivity extends AppCompatActivity {
     }
 
     private void closeAllDropdowns() {
-        // Set all description TextViews to GONE and arrows to 0 rotation
+        // What is Bluetooth
+        tv_whatIsBluetooth.setVisibility(View.GONE);
+        vwc_whatIsBluetooth.setRotation(0);
+
+        // Point 2
+        tv_point2.setVisibility(View.GONE);
+        vwc_point2.setRotation(0);
+
+        // Why Bluetooth
+        tv_whyBluetooth.setVisibility(View.GONE);
+        vwc_whyBluetooth.setRotation(0);
+
+        // Versions
         tv_versions.setVisibility(View.GONE);
         vwc_versions.setRotation(0);
 
+        // Profiles
         tv_profiles.setVisibility(View.GONE);
         vwc_profiles.setRotation(0);
 
+        // Security
         tv_security.setVisibility(View.GONE);
         vwc_security.setRotation(0);
 
+        // WiFi
         tv_wifi.setVisibility(View.GONE);
         vwc_wifi.setRotation(0);
 
+        // Mesh
         tv_mesh.setVisibility(View.GONE);
         vwc_mesh.setRotation(0);
 
+        // BLE
         tv_ble.setVisibility(View.GONE);
         vwc_ble.setRotation(0);
 
+        // Troubleshooting
         tv_troubleshooting.setVisibility(View.GONE);
         vwc_troubleshooting.setRotation(0);
 
+        // Future
         tv_future.setVisibility(View.GONE);
         vwc_future.setRotation(0);
     }

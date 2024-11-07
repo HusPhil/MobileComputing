@@ -16,6 +16,7 @@ import com.husph.mobilecomputing.authentication.UserProfileActivity;
 import com.husph.mobilecomputing.bluetooth.BluetoothActivity;
 import com.husph.mobilecomputing.bluetooth.BluetoothStudyActivity;
 import com.husph.mobilecomputing.calculator.CalculatorActivity;
+import com.husph.mobilecomputing.infrared.InfraredStudyActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -61,6 +62,7 @@ public class MenuActivity extends AppCompatActivity {
         cv_infrared = findViewById(R.id.cv_infrared);
         cv_infrared.setOnClickListener(v -> {
 //            startActivity(new Intent(MenuActivity.this, InfraredActivity.class));
+            startActivity(new Intent(MenuActivity.this, InfraredStudyActivity.class));
         });
         cv_userProfile = findViewById(R.id.cv_userProfile);
         cv_userProfile.setOnClickListener(v -> {

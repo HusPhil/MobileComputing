@@ -51,6 +51,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -293,36 +294,113 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     private void listDevices_OnItemClickListener(int i) {
-        // Check if the clicked item is a header
-        int adjustedIndex = 0;
-        int pairedDeviceListIndexStart = -1;
-
-        for(int j = 0; i < deviceListAdapter.getCount(); j++) {
-
-            if(deviceListAdapter.getItem(j).contains("Header:Paired devices")) {
-                if(i <= j) break;
-                pairedDeviceListIndexStart = j;
-                break;
-            }
-        }
-
-        if(pairedDeviceListIndexStart == -1) {
-            if (!deviceListAdapter.getItem(i).contains("Header")) {
-                Toast.makeText(this, "Unpaired device", Toast.LENGTH_SHORT).show();
-            }
+        String selectedItem = deviceListAdapter.getItem(i);
+        
+        // Skip if header is clicked
+        if (selectedItem.contains("Header")) {
             return;
         }
 
-        adjustedIndex = i - pairedDeviceListIndexStart - 1;
+        // Check permissions first
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
+            return;
+        }
 
-        BluetoothDevice selectedDevice = pairedDevices[adjustedIndex];
+        // Get the MAC address from the selected item
+        String[] parts = selectedItem.split(" :: ");
+        if (parts.length != 2) {
+            Toast.makeText(this, "Invalid device format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String macAddress = parts[1];
+        BluetoothDevice device = bluetoothAdapter.getRemoteDevice(macAddress);
 
-        // Create new client connection for each transfer
-        ClientClass clientClass = new ClientClass(selectedDevice);
-        clientClass.start();
+        // Check if device is already paired
+        if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+            // Handle paired device connection
+            ClientClass clientClass = new ClientClass(device);
+            clientClass.start();
+            tv_bluetoothStatus.setText("Status: Connecting");
+        } else {
+            // Handle unpaired device pairing
+            try {
+                // Cancel discovery before pairing
+                if (bluetoothAdapter.isDiscovering()) {
+                    bluetoothAdapter.cancelDiscovery();
+                }
 
-        tv_bluetoothStatus.setText("Status: Connecting");
+                // Register for bond state changes
+                IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+                BroadcastReceiver pairingReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(intent.getAction())) {
+                            final BluetoothDevice bondDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                            final int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                            final int prevBondState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
 
+                            if (bondDevice.getAddress().equals(macAddress)) {
+                                if (bondState == BluetoothDevice.BOND_BONDED) {
+                                    runOnUiThread(() -> {
+                                        if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                                            requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
+                                            return;
+                                        }
+                                        Toast.makeText(context, "Successfully paired with " + bondDevice.getName(), Toast.LENGTH_SHORT).show();
+                                        btn_discoverDevices_OnClickListener(); // Refresh list
+                                    });
+                                    unregisterReceiver(this);
+                                } else if (bondState == BluetoothDevice.BOND_NONE && prevBondState == BluetoothDevice.BOND_BONDING) {
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(context, "Pairing failed with " + bondDevice.getName(), Toast.LENGTH_SHORT).show();
+                                    });
+                                    unregisterReceiver(this);
+                                }
+                            }
+                        }
+                    }
+                };
+                registerReceiver(pairingReceiver, filter);
+
+                // For devices that require pairing confirmation
+                IntentFilter pinFilter = new IntentFilter(BluetoothDevice.ACTION_PAIRING_REQUEST);
+                BroadcastReceiver pinReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        if (BluetoothDevice.ACTION_PAIRING_REQUEST.equals(intent.getAction())) {
+                            BluetoothDevice pairingDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                            if (pairingDevice.getAddress().equals(macAddress)) {
+                                try {
+                                    // You might need to handle different pairing variants here
+                                    // This is just one example method
+                                    byte[] pin = "0000".getBytes(); // default pin
+                                    if (ActivityCompat.checkSelfPermission(BluetoothActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+
+                                        return;
+                                    }
+                                    pairingDevice.setPin(pin);
+                                    //Optional: Automatically confirm the pairing
+                                    pairingDevice.setPairingConfirmation(true);
+                                } catch (Exception e) {
+                                    Log.e(TAG, "Error setting pin: ", e);
+                                }
+                            }
+                        }
+                    }
+                };
+                registerReceiver(pinReceiver, pinFilter);
+
+                // Start pairing
+                Toast.makeText(this, "Initiating pairing with " + device.getName(), Toast.LENGTH_SHORT).show();
+                Method method = device.getClass().getMethod("createBond", (Class[]) null);
+                method.invoke(device, (Object[]) null);
+                
+            } catch (Exception e) {
+                Toast.makeText(this, "Pairing failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Pairing error: ", e);
+            }
+        }
     }
 
     private void btn_receiveFile_OnClickListener() {

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".bluetooth.BluetoothStudyActivity">
+    tools:context=".infrared.InfraredStudyActivity">
 
     <TextView
         android:id="@+id/tv_title"
@@ -13,11 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
-        android:text="Learning about Bluetooth!"
+        android:text="Learning about Infrared!"
         android:textAlignment="center"
         android:textSize="@dimen/fs_primary_200"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
@@ -50,16 +49,15 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView4"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- What is Infrared -->
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="@dimen/padding_medium"
                 android:layout_marginLeft="@dimen/padding_medium"
@@ -76,71 +74,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/dp_whatIsBluetooth"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_whatIsBluetooth"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right">
-
-                            </View>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="What is Bluetooth?"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </LinearLayout>
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_whatIsBluetooth"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Bluetooth is a short-range wireless technology standard used for exchanging data between fixed and mobile devices over short distances. It uses radio waves in the ISM band, from 2.402 GHz to 2.48 GHz."/>
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_whyBluetooth"
+                        android:id="@+id/dp_whatIsInfrared"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -150,7 +84,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="4">
                             <View
-                                android:id="@+id/vwc_whyBluetooth"
+                                android:id="@+id/vwc_whatIsInfrared"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@color/black"
@@ -162,7 +96,7 @@
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Why 'Bluetooth' ?"
+                            android:text="What is Infrared?"
                             android:layout_weight="1"
                             android:textSize="@dimen/fs_primary_200"
                             android:singleLine="true"
@@ -172,15 +106,16 @@
                     <TextView
                         android:fontFamily="@font/poppins"
                         android:visibility="gone"
-                        android:id="@+id/tv_whyBluetooth"
+                        android:id="@+id/tv_whatIsInfrared"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_small"
                         android:layout_weight="1"
-                        android:text="Bluetooth was named after Harald Bluetooth, a 10th-century Danish king known for uniting Danish tribes into a single kingdom. The name was proposed by Jim Kardach from Intel in 1997. The analogy was perfect as Bluetooth technology was designed to unite different communication protocols. The Bluetooth logo is actually a combination of the Nordic runes for Harald's initials (H and B). Just as King Harald united the tribes, Bluetooth technology unites different devices and communication standards."/>
+                        android:text="Infrared (IR) is a type of electromagnetic radiation with wavelengths longer than visible light but shorter than radio waves. It's commonly used in remote controls, thermal imaging, and short-range wireless communication. IR radiation is invisible to the human eye but can be felt as heat."/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Applications -->
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="@dimen/padding_medium"
                 android:layout_marginLeft="@dimen/padding_medium"
@@ -197,72 +132,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/dp_point2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_point2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right">
-
-                            </View>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Bluetooth versions"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </LinearLayout>
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_point2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Bluetooth is a short-range wireless technology standard used for exchanging data between fixed and mobile devices over short distances. It uses radio waves in the ISM band, from 2.402 GHz to 2.48 GHz."/>
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Versions and Advancements -->
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_versions"
+                        android:id="@+id/dp_applications"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -272,7 +142,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="4">
                             <View
-                                android:id="@+id/vwc_versions"
+                                android:id="@+id/vwc_applications"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@color/black"
@@ -284,7 +154,7 @@
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Versions and Advancements"
+                            android:text="Applications of Infrared"
                             android:layout_weight="1"
                             android:textSize="@dimen/fs_primary_200"
                             android:singleLine="true"
@@ -294,16 +164,16 @@
                     <TextView
                         android:fontFamily="@font/poppins"
                         android:visibility="gone"
-                        android:id="@+id/tv_versions"
+                        android:id="@+id/tv_applications"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_small"
                         android:layout_weight="1"
-                        android:text="Bluetooth technology has seen significant evolution since its inception, moving from Bluetooth 1.0 (with limited speeds and reliability) to Bluetooth 5.3, the latest version. Each version brought improvements in speed, range, and efficiency. For instance, Bluetooth 4.0 introduced Bluetooth Low Energy (BLE), which reduced power consumption drastically, making it ideal for wearables and IoT devices. Bluetooth 5.0 increased data transfer speed and quadrupled the range, making it effective for larger-scale IoT applications. Each version targets a wider range of applications and enhances user experience, adapting to new technology demands."/>
+                        android:text="Infrared technology has numerous applications across various fields. In consumer electronics, it's used in TV remote controls and short-range data transmission. In medicine, IR imaging helps in diagnostics and thermal therapy. Security systems use IR sensors for motion detection, while industrial applications include thermal imaging for equipment maintenance and quality control. Night vision devices also rely on IR technology for surveillance and navigation in low-light conditions."/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Profiles -->
+            <!-- Advantages -->
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="@dimen/padding_medium"
                 android:layout_marginLeft="@dimen/padding_medium"
@@ -320,7 +190,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/dp_profiles"
+                        android:id="@+id/dp_advantages"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
@@ -330,7 +200,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="4">
                             <View
-                                android:id="@+id/vwc_profiles"
+                                android:id="@+id/vwc_advantages"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@color/black"
@@ -342,7 +212,7 @@
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Bluetooth Applications"
+                            android:text="Advantages of Infrared"
                             android:layout_weight="1"
                             android:textSize="@dimen/fs_primary_200"
                             android:singleLine="true"
@@ -352,311 +222,308 @@
                     <TextView
                         android:fontFamily="@font/poppins"
                         android:visibility="gone"
-                        android:id="@+id/tv_profiles"
+                        android:id="@+id/tv_advantages"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_small"
                         android:layout_weight="1"
-                        android:text="Bluetooth profiles are protocols that enable Bluetooth devices to perform specific functions. Each profile defines what types of data can be transferred. For example, the Advanced Audio Distribution Profile (A2DP) allows audio streaming to wireless speakers, while the Hands-Free Profile (HFP) enables hands-free calling, commonly used in car systems. The Human Interface Device (HID) profile is used for connecting devices like keyboards and mice to computers or mobile devices. Understanding these profiles helps manufacturers design specialized Bluetooth devices and ensures compatibility across devices."/>
+                        android:text="Infrared technology offers several advantages. It's cost-effective, requires minimal power consumption, and provides secure line-of-sight communication. IR sensors are simple to implement and highly reliable. The technology is safe for human exposure at normal levels and doesn't interfere with radio frequencies. IR imaging can work in complete darkness and can detect heat signatures through various weather conditions."/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Security -->
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_security"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_security"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Security in Bluetooth"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_security"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Security is critical in Bluetooth communications due to the open and wireless nature of connections. Bluetooth uses pairing, encryption, and authentication to protect data. Pairing ensures devices trust each other before sharing data. Encryption scrambles data so that it cannot be easily read by eavesdroppers. Authentication helps verify that the data is coming from a trusted source. Together, these measures protect against unauthorized access and safeguard user data, but it's also essential to keep Bluetooth devices updated to prevent vulnerabilities."/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- WiFi Comparison -->
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_wifi"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_wifi"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Bluetooth vs. Wi-Fi"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_wifi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Bluetooth and Wi-Fi are both wireless technologies, but they serve different purposes. Bluetooth is typically used for short-range, low-bandwidth connections between devices like phones, speakers, or fitness trackers. Wi-Fi, on the other hand, supports high-speed internet access and covers a larger range. Bluetooth is less power-intensive, which is ideal for battery-operated devices, while Wi-Fi is better suited for continuous high-speed data transfer. These differences in use cases show why each technology has its distinct advantages in different scenarios."/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Mesh Networking -->
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_mesh"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_mesh"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Bluetooth Mesh Networking"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_mesh"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Bluetooth Mesh enables many-to-many communication across devices, creating a network that covers larger areas, ideal for smart home and industrial IoT applications. In a mesh network, devices relay messages to each other, allowing communication beyond the typical range limitations of standard Bluetooth. This is especially useful for connecting multiple IoT devices in a home or building, as it enables all devices to communicate seamlessly, even if some are physically distant from others."/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- BLE -->
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_ble"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_ble"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Bluetooth Low Energy"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_ble"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Bluetooth Low Energy, or BLE, was introduced in Bluetooth 4.0 as a power-efficient version of Bluetooth for devices that don't require constant data streaming. BLE is commonly used in wearable technology, fitness trackers, and smart home devices because it allows long-lasting battery life without compromising on communication capability. BLE operates in short bursts of data transfer, which conserves battery, making it a preferred choice for many modern devices that prioritize battery life."/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Troubleshooting -->
-            <androidx.cardview.widget.CardView
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginLeft="@dimen/padding_medium"
-                android:layout_marginRight="@dimen/padding_medium"
-                app:cardCornerRadius="@dimen/padding_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_small"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/dp_troubleshooting"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-                            <View
-                                android:id="@+id/vwc_troubleshooting"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
-                                android:background="@drawable/ic_arrow_right"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="@dimen/padding_small"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Common Bluetooth Issues"
-                            android:layout_weight="1"
-                            android:textSize="@dimen/fs_primary_200"
-                            android:singleLine="true"
-                            android:ellipsize="end"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:fontFamily="@font/poppins"
-                        android:visibility="gone"
-                        android:id="@+id/tv_troubleshooting"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/padding_small"
-                        android:layout_weight="1"
-                        android:text="Bluetooth users sometimes experience issues like connectivity drop-offs, interference, or pairing problems. Interference can occur from other wireless devices or obstacles between devices. To troubleshoot, users should try restarting devices, checking for updates, reducing interference by moving closer, or re-pairing the devices. Resetting the Bluetooth settings can often resolve stubborn connectivity problems. Understanding these issues and solutions can improve user experience and reduce frustration."/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Future -->
+            <!-- Limitations -->
             <androidx.cardview.widget.CardView
                 android:layout_marginTop="@dimen/padding_medium"
                 android:layout_marginLeft="@dimen/padding_medium"
                 android:layout_marginRight="@dimen/padding_medium"
                 android:layout_marginBottom="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/padding_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_small"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/dp_limitations"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4">
+                            <View
+                                android:id="@+id/vwc_limitations"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/ic_arrow_right"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/padding_small"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Limitations of Infrared"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/fs_primary_200"
+                            android:singleLine="true"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:fontFamily="@font/poppins"
+                        android:visibility="gone"
+                        android:id="@+id/tv_limitations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_weight="1"
+                        android:text="Despite its advantages, infrared technology has some limitations. It requires a clear line of sight and can't pass through walls or solid objects. The range is typically limited to short distances. Environmental factors like rain, fog, or strong sunlight can interfere with IR signals. In communication applications, the data transfer rate is generally slower compared to modern wireless technologies like Bluetooth or Wi-Fi."/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Types of Infrared -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginLeft="@dimen/padding_medium"
+                android:layout_marginRight="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/padding_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_small"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/dp_types"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4">
+                            <View
+                                android:id="@+id/vwc_types"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/ic_arrow_right"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/padding_small"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Types of Infrared Radiation"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/fs_primary_200"
+                            android:singleLine="true"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:fontFamily="@font/poppins"
+                        android:visibility="gone"
+                        android:id="@+id/tv_types"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_weight="1"
+                        android:text="Infrared radiation is divided into three main categories: Near-infrared (NIR: 0.75-1.4μm), used in fiber optics and remote controls; Mid-infrared (MIR: 1.4-3μm), used in thermal imaging; and Far-infrared (FIR: 3-1000μm), used in thermal therapy and astronomy. Each type has unique properties and applications in different fields."/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- How Infrared Works -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_marginLeft="@dimen/padding_medium"
+                android:layout_marginRight="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/padding_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_small"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/dp_working"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4">
+                            <View
+                                android:id="@+id/vwc_working"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/ic_arrow_right"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/padding_small"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="How Infrared Works"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/fs_primary_200"
+                            android:singleLine="true"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:fontFamily="@font/poppins"
+                        android:visibility="gone"
+                        android:id="@+id/tv_working"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_weight="1"
+                        android:text="Infrared radiation works through electromagnetic waves that are longer than visible light but shorter than microwaves. These waves carry heat energy and can be detected by specialized sensors. When an object emits infrared radiation, it's essentially releasing heat energy. This principle is used in thermal cameras, which convert infrared radiation into visible images showing temperature differences."/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Safety Considerations -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_marginLeft="@dimen/padding_medium"
+                android:layout_marginRight="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/padding_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_small"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/dp_safety"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4">
+                            <View
+                                android:id="@+id/vwc_safety"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/ic_arrow_right"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/padding_small"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Safety Considerations"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/fs_primary_200"
+                            android:singleLine="true"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:fontFamily="@font/poppins"
+                        android:visibility="gone"
+                        android:id="@+id/tv_safety"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_weight="1"
+                        android:text="While infrared radiation is generally safe, prolonged exposure to intense IR sources can cause heat-related injuries. Most IR devices are designed with safety limits. In medical applications, exposure time and intensity are carefully controlled. Common safety measures include protective eyewear when working with high-power IR sources and maintaining safe distances from IR-emitting devices."/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- History of Infrared -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_marginLeft="@dimen/padding_medium"
+                android:layout_marginRight="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/padding_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_small"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/dp_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="180dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4">
+                            <View
+                                android:id="@+id/vwc_history"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@color/black"
+                                android:background="@drawable/ic_arrow_right"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/padding_small"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="History of Infrared"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/fs_primary_200"
+                            android:singleLine="true"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:fontFamily="@font/poppins"
+                        android:visibility="gone"
+                        android:id="@+id/tv_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/padding_small"
+                        android:layout_weight="1"
+                        android:text="Infrared radiation was discovered in 1800 by Sir William Herschel while studying the solar spectrum. He noticed temperature changes beyond the visible red light, leading to the discovery of infrared radiation. Since then, IR technology has evolved significantly, from early thermal imaging in the 1920s to modern applications in smartphones, medical devices, and space exploration."/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Future Applications -->
+            <androidx.cardview.widget.CardView
+                android:layout_margin="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -691,7 +558,7 @@
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Bluetooth Future"
+                            android:text="Future Applications"
                             android:layout_weight="1"
                             android:textSize="@dimen/fs_primary_200"
                             android:singleLine="true"
@@ -706,13 +573,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_small"
                         android:layout_weight="1"
-                        android:text="Bluetooth technology continues to advance, with future developments focused on higher data rates, enhanced range, improved location accuracy, and stronger security measures. With the rise of IoT, future Bluetooth versions may prioritize seamless integration in smart cities, connected homes, and autonomous vehicles. Potential improvements in data speed, range, and security could enable new use cases, such as augmented reality, medical monitoring, and large-scale device networks. Bluetooth's evolution will likely expand its influence in many emerging technologies."/>
+                        android:text="Future applications of infrared technology are expanding into areas like advanced medical diagnostics, autonomous vehicle navigation, smart building management, and enhanced night vision systems. Emerging technologies combine IR with AI for more accurate temperature monitoring and detection systems. Research continues in developing more sensitive IR sensors and new applications in quantum computing and communications."/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-
 
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout> 
