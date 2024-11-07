@@ -47,6 +47,8 @@ dependencies {
     implementation(libs.googleid)
     implementation(libs.gridlayout)
     implementation(libs.rhino.android)
+    implementation(libs.glide)
+    implementation(libs.retrofit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

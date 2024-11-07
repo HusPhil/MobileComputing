@@ -90,7 +90,7 @@ public class BluetoothActivity extends AppCompatActivity {
     static final int STATE_CONNECTION_FAILED=4;
     static final int STATE_MESSAGE_RECEIVED=5;
 
-    private static final String APP_NAME = "BTChat";
+    private static final String APP_NAME = "Mobile Comp BT";
     private static final UUID MY_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
 
 
@@ -274,7 +274,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
     public void writeBytesToFile(byte[] data, String fileName) {
         // Define the directory where you want to save the file
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "MyAppFiles");
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "BT_APP_FILES");
 
         // Ensure the directory exists
         if (!storageDir.exists()) {

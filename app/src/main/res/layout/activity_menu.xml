@@ -385,18 +385,18 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:padding="@dimen/padding_medium"
-                    android:background="@color/darkblue">
-                    <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/ic_file_transfer"
-                        android:backgroundTint="@color/white"
-                        android:layout_weight="4"/>
-                </LinearLayout>
+                        android:layout_weight="4"
+                        android:padding="@dimen/padding_medium"
+                        android:background="@color/darkblue">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_file_transfer"
+                            android:backgroundTint="@color/white"
+                            android:layout_weight="4"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -423,6 +423,70 @@
                             android:textSize="@dimen/fs_secondary_100"
                             android:fontFamily="@font/poppins"
                             android:text="Demo of Bluetooth Communication"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_next"
+                        android:layout_margin="@dimen/padding_medium"
+                        android:layout_weight="4"/>
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_countryFlags"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="@dimen/padding_medium"
+                android:layout_marginBottom="@dimen/padding_medium"
+                app:cardCornerRadius="@dimen/padding_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:padding="@dimen/padding_medium"
+                        android:background="@color/darkblue">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_flag"
+                            android:backgroundTint="@color/white"
+                            android:layout_weight="4"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:layout_weight="2"
+                        android:padding="@dimen/padding_small">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:singleLine="true"
+                            android:textSize="@dimen/fs_secondary_100"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Country Flags"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:layout_height="match_parent"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/fs_secondary_100"
+                            android:fontFamily="@font/poppins"
+                            android:text="List of Countries and their flags"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"

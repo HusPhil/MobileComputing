@@ -16,6 +16,7 @@ import com.husph.mobilecomputing.authentication.UserProfileActivity;
 import com.husph.mobilecomputing.bluetooth.BluetoothActivity;
 import com.husph.mobilecomputing.bluetooth.BluetoothStudyActivity;
 import com.husph.mobilecomputing.calculator.CalculatorActivity;
+import com.husph.mobilecomputing.countries.CountryFlagActivity;
 import com.husph.mobilecomputing.infrared.InfraredStudyActivity;
 
 public class MenuActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class MenuActivity extends AppCompatActivity {
     CardView cv_infrared;
     CardView cv_bluetooth;
     CardView cv_BTFileTransfer;
+    CardView cv_countryFlags;
 
 
     @Override
@@ -68,6 +70,13 @@ public class MenuActivity extends AppCompatActivity {
         cv_userProfile.setOnClickListener(v -> {
             startActivity(new Intent(MenuActivity.this, UserProfileActivity.class));
         });
+
+        cv_countryFlags = findViewById(R.id.cv_countryFlags);
+        cv_countryFlags.setOnClickListener(v -> {
+            startActivity(new Intent(MenuActivity.this, CountryFlagActivity.class));
+        });
+
+
 
 
     }

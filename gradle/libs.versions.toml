@@ -18,6 +18,8 @@ credentialsPlayServicesAuth = "1.5.0-alpha05"
 googleid = "1.1.1"
 gridlayout = "1.0.0"
 rhinoAndroid = "1.6.0"
+glide = "5.0.0-rc01"
+retrofit = "2.11.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -37,6 +39,8 @@ credentials-play-services-auth = { group = "androidx.credentials", name = "crede
 googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
 rhino-android = { group = "com.faendir.rhino", name = "rhino-android", version.ref = "rhinoAndroid" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
