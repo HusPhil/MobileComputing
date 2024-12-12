@@ -172,23 +172,30 @@
                         android:id="@+id/rg_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+
+                        <RadioButton
                             android:id="@+id/rb_male"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:textSize="@dimen/fs_secondary_100"
                             android:text="Male"
-                            android:textColor="@color/material_dynamic_neutral70" />
-                        <com.google.android.material.radiobutton.MaterialRadioButton
+                            android:theme="@style/RadioButtonStyle"
+                            android:textColor="@color/darkblue"
+                            android:buttonTint="@color/darkblue" />
+
+                        <RadioButton
                             android:id="@+id/rb_female"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:textSize="@dimen/fs_secondary_100"
+                            android:theme="@style/RadioButtonStyle"
                             android:text="Female"
-                            android:textColor="@color/material_dynamic_neutral70" />
+                            android:textColor="@color/darkblue"
+                            android:buttonTint="@color/darkblue" />
                     </RadioGroup>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -231,10 +238,11 @@
                             android:textColor="@color/black"/>
 
                         <ImageButton
+                            app:tint="@color/white"
                             android:id="@+id/btn_pickBirthDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/cardview_shadow_start_color"
+                            android:backgroundTint="@color/darkblue"
                             android:src="@drawable/ic_calendar"
                             android:text="Pick"
                             android:textSize="@dimen/fs_secondary_100"
@@ -244,6 +252,8 @@
 
 
                     <LinearLayout
+
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"

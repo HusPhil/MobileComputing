@@ -1,5 +1,6 @@
 package com.husph.mobilecomputing.infrared;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -42,6 +43,10 @@ public class InfraredStudyActivity extends AppCompatActivity {
         wv_ytInfraredVid.loadData(ytVidSrc, "text/html", "utf-8");
         wv_ytInfraredVid.getSettings().setJavaScriptEnabled(true);
         wv_ytInfraredVid.setWebChromeClient(new WebChromeClient());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(com.google.android.material.R.color.material_dynamic_neutral70));
+        }
 
         initializeViews();
         setupClickListeners();

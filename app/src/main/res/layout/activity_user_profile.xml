@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="Fhil Joshua"
+                        android:text="User"
                         android:textAlignment="center"
                         android:textColor="@color/darkblue" />
 
@@ -63,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/poppins"
-                        android:text="husphil200@gmail.com"
+                        android:text="user_email@gmail.com"
                         android:textAlignment="center"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/fs_secondary_200" />
@@ -199,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Gender: Male"
+                        android:text="Male"
                         android:textColor="@color/darkblue"
                         android:textSize="@dimen/fs_secondary_100" />
                 </LinearLayout>

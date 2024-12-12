@@ -1,6 +1,7 @@
 package com.husph.mobilecomputing.bluetooth;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -47,6 +48,10 @@ public class BluetoothStudyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_info);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(com.google.android.material.R.color.material_dynamic_neutral70));
+        }
 
         wv_ytInfraredVid = findViewById(R.id.wv_ytInfraredVid);
         wv_ytInfraredVid.loadData(ytVidSrc, "text/html", "utf-8");

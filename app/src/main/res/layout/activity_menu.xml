@@ -55,8 +55,6 @@
                 android:id="@+id/cv_helloWorld"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout
@@ -119,7 +117,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout
@@ -183,7 +180,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout
@@ -247,7 +243,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout
@@ -312,7 +307,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout
@@ -376,7 +370,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout
@@ -440,7 +433,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="@dimen/padding_medium"
-                android:layout_marginBottom="@dimen/padding_medium"
                 app:cardCornerRadius="@dimen/padding_medium">
 
                 <LinearLayout

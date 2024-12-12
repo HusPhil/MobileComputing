@@ -114,6 +114,8 @@ public class BluetoothActivity extends AppCompatActivity {
     private void InitializeComponents() {
 
 
+
+
         bluetoothManager = getSystemService(BluetoothManager.class);
         bluetoothAdapter = bluetoothManager.getAdapter();
 

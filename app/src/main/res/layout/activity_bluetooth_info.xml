@@ -8,6 +8,7 @@
     tools:context=".bluetooth.BluetoothStudyActivity">
 
     <TextView
+        android:textColor="@color/darkblue"
         android:id="@+id/tv_title"
         android:layout_marginTop="@dimen/padding_medium"
         android:layout_width="match_parent"
@@ -91,7 +92,7 @@
                                 android:id="@+id/vwc_whatIsBluetooth"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right">
 
                             </View>
@@ -99,6 +100,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -154,12 +156,13 @@
                                 android:id="@+id/vwc_whyBluetooth"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -212,7 +215,7 @@
                                 android:id="@+id/vwc_point2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right">
 
                             </View>
@@ -220,6 +223,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -276,12 +280,13 @@
                                 android:id="@+id/vwc_versions"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -334,12 +339,13 @@
                                 android:id="@+id/vwc_profiles"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -392,12 +398,13 @@
                                 android:id="@+id/vwc_security"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -450,12 +457,13 @@
                                 android:id="@+id/vwc_wifi"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -508,12 +516,13 @@
                                 android:id="@+id/vwc_mesh"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -566,12 +575,13 @@
                                 android:id="@+id/vwc_ble"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -624,12 +634,13 @@
                                 android:id="@+id/vwc_troubleshooting"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -683,12 +694,13 @@
                                 android:id="@+id/vwc_future"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"

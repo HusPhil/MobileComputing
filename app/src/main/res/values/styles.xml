@@ -15,4 +15,7 @@
         <item name="backgroundColor">@color/red</item>
 
     </style>
+    <style name="RadioButtonStyle" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/darkblue</item>
+    </style>
 </resources>

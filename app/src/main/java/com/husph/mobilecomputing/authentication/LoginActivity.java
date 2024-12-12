@@ -35,9 +35,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.husph.mobilecomputing.R;
+import com.husph.mobilecomputing.models.UserProfile;
 import com.husph.mobilecomputing.utils.Constants;
 import com.husph.mobilecomputing.utils.FirebaseAuthUtils;
 import com.husph.mobilecomputing.utils.FormValidation;
@@ -161,17 +163,28 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (user != null) {
                             String userId = user.getUid();
+                            usersRef.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (!task.isSuccessful()) {
 
-                            usersRef.child(userId).setValue(userData)
-                                    .addOnCompleteListener(detailsTask -> {
-                                        if (detailsTask.isSuccessful()) {
-                                            runOnUiThread(() -> Toast.makeText(LoginActivity.this, "User data saved", Toast.LENGTH_SHORT).show());
-                                            Log.i(TAG, "User data saved for: " + user.getEmail());
-                                        } else {
-                                            Log.e(TAG, "Error saving user data: " + detailsTask.getException());
-                                            runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error saving user data", Toast.LENGTH_SHORT).show());
-                                        }
-                                    });
+                                    }
+                                    else if(task.getResult().getValue(UserProfile.class) == null) {
+                                        usersRef.child(userId).setValue(userData)
+                                                .addOnCompleteListener(detailsTask -> {
+                                                    if (detailsTask.isSuccessful()) {
+                                                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "User data saved", Toast.LENGTH_SHORT).show());
+                                                        Log.i(TAG, "User data saved for: " + user.getEmail());
+                                                    } else {
+                                                        Log.e(TAG, "Error saving user data: " + detailsTask.getException());
+                                                        runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error saving user data", Toast.LENGTH_SHORT).show());
+                                                    }
+                                                });
+                                    }
+                                }
+                            });
+
+
                         } else {
                             Log.e(TAG, "FirebaseUser is null after successful registration");
                             runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Error: User data is missing", Toast.LENGTH_SHORT).show());
