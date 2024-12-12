@@ -36,6 +36,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="0"
+                android:textColor="@color/darkblue"
                 android:textSize="@dimen/fs_primary_100" />
         </androidx.cardview.widget.CardView>
 
@@ -48,7 +49,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_history"
-                app:iconTint="@color/black"
+                app:iconTint="@color/darkblue"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
@@ -65,6 +66,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                app:contentPaddingLeft="16dp"
+                app:contentPaddingRight="16dp"
                 android:visibility="gone"
                 app:cardCornerRadius="@dimen/padding_small">
 
@@ -74,14 +77,14 @@
                     android:layout_width="match_parent"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_secondary_200"
-                    android:text="sin(90) + 31*(10^2)"
+                    android:text="sin(90)"
                     android:maxLines="1"
                     android:padding="@dimen/padding_small"/>
             </androidx.cardview.widget.CardView>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_keyboard"
                 android:layout_width="60dp"
-                app:iconTint="@color/black"
+                app:iconTint="@color/darkblue"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_keyboard"
                 app:iconPadding="0dp"
@@ -127,31 +130,34 @@
             android:backgroundTint="@android:color/transparent">
 
             <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:cardElevation="0dp"
+                android:backgroundTint="@android:color/transparent"
                 app:cardBackgroundColor="@android:color/transparent"
-                android:backgroundTint="@android:color/transparent">
+                app:cardElevation="0dp">
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_exit"
-                    android:backgroundTint="@color/white"
-                    android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                    android:layout_weight="1"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     app:icon="@drawable/ic_exit"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconTint="@color/red"
-                    app:iconSize="25dp"/>
+                    app:iconSize="25dp"
+                    app:iconTint="@color/darkblue" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
@@ -165,14 +171,14 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="AC"
-                    android:textColor="@color/red"
+                    android:textColor="@color/darkblue"
                     android:textSize="@dimen/fs_AC"
-                    app:cornerRadius="35dp" />
+                    app:cornerRadius="16dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
@@ -186,21 +192,22 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     app:icon="@drawable/ic_backspace"
                     app:iconGravity="textStart"
-                    app:iconTint="@color/red"
+                    app:iconTint="@color/darkblue"
                     app:iconPadding="0dp"
                     app:iconSize="25dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_divide"
+                    android:backgroundTint="@color/black"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_weight="1"
@@ -209,7 +216,7 @@
                     android:text=""
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     app:icon="@drawable/ic_divide"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
@@ -226,12 +233,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num7"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -241,17 +248,17 @@
                     android:text="7"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp" />
+                    app:cornerRadius="16dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num8"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -260,19 +267,19 @@
                     android:layout_height="70dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="8"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num9"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_width="70dp"
@@ -281,17 +288,18 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="9"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_multiply"
+                    android:backgroundTint="@color/black"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_weight="1"
@@ -300,7 +308,7 @@
                     android:text=""
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     app:icon="@drawable/ic_multiply"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
@@ -317,12 +325,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num4"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -332,18 +340,18 @@
                     android:text="4"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp" />
+                    app:cornerRadius="16dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num5"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_width="70dp"
@@ -353,18 +361,18 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="5"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp" />
+                    app:cornerRadius="16dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num6"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_width="70dp"
@@ -373,16 +381,17 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="6"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
+                    android:backgroundTint="@color/black"
                     android:id="@+id/btn_subtract"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -392,7 +401,7 @@
                     android:text=""
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     app:icon="@drawable/ic_minus"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
@@ -409,12 +418,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num1"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -424,17 +433,17 @@
                     android:text="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp" />
+                    app:cornerRadius="16dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num2"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -443,19 +452,19 @@
                     android:layout_height="70dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="2"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num3"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_width="70dp"
@@ -464,17 +473,18 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="3"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.button.MaterialButton
+                    android:backgroundTint="@color/black"
                     android:id="@+id/btn_add"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_width="70dp"
@@ -484,7 +494,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text=""
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     app:icon="@drawable/ic_plus"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
@@ -501,12 +511,12 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_doubleZero"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
@@ -516,17 +526,17 @@
                     android:text="00"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp" />
+                    app:cornerRadius="16dp" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_num0"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_gravity="center"
@@ -536,19 +546,19 @@
                     android:layout_height="70dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="0"/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_decimalPoint"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="@color/darkblue"
                     android:textColor="@color/white"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_width="70dp"
@@ -557,18 +567,18 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
                     android:text="."/>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
-
+                android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent">
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_equal"
-                    android:backgroundTint="@color/orange"
+                    android:backgroundTint="@color/white"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                     android:layout_weight="1"
@@ -577,7 +587,8 @@
                     android:text=""
                     android:fontFamily="@font/poppins_semibold"
                     android:textSize="@dimen/fs_primary_200"
-                    app:cornerRadius="35dp"
+                    app:cornerRadius="16dp"
+                    app:iconTint="@color/darkblue"
                     app:icon="@drawable/ic_equal"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"

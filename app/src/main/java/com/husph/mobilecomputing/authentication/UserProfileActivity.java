@@ -1,18 +1,28 @@
 package com.husph.mobilecomputing.authentication;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.husph.mobilecomputing.R;
 import com.husph.mobilecomputing.models.UserProfile;
@@ -20,17 +30,21 @@ import com.husph.mobilecomputing.utils.Constants;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private UserProfile userProfile;
-    private Gson gson;
 
-    private EditText et_display_email;
-    private EditText et_display_username;
-    private EditText et_display_phone;
-    private EditText et_display_province;
-    private EditText et_display_gender;
-    private EditText et_display_interests;
+    private Gson gson;
+    FirebaseAuth mAuth;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference userDBRef;
+
+    private TextView tv_display_email;
+    private TextView tv_display_username;
+    private TextView tv_display_phone;
+    private TextView tv_display_province;
+    private TextView tv_display_gender;
+    private TextView tv_display_interests;
     private TextView tv_display_birthDate;
-    private TextView tv_display_birthTime;
+    private Button btn_signOut;
+    private Button btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,52 +59,69 @@ public class UserProfileActivity extends AppCompatActivity {
 
         InitializeComponents();
 
-        showUserDetails();
     }
 
     private void InitializeComponents() {
         gson = new Gson();
 
-        String userProfileJson = getIntent().getStringExtra(Constants.PASSKEY_UseProfile);
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        userDBRef = firebaseDatabase.getReference("users");
+        userDBRef.child(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    UserProfile userProfile = task.getResult().getValue(UserProfile.class);
+                    showUserDetails(userProfile);
+                }
+            }
+        });
 
-        if(userProfileJson != null) {
-            userProfile =  gson.fromJson(userProfileJson, UserProfile.class);
-        }
+        tv_display_email = findViewById(R.id.tv_display_email);
+        tv_display_username = findViewById(R.id.tv_display_username);
+        tv_display_phone = findViewById(R.id.tv_display_phone);
+        tv_display_province = findViewById(R.id.tv_display_province);
+        tv_display_gender = findViewById(R.id.tv_display_gender);
+        tv_display_interests = findViewById(R.id.tv_display_interests);
 
-        et_display_email = findViewById(R.id.et_display_email);
-        et_display_username = findViewById(R.id.et_display_username);
-        et_display_phone = findViewById(R.id.et_display_phone);
-        et_display_province = findViewById(R.id.et_display_province);
-        et_display_gender = findViewById(R.id.et_display_gender);
-        et_display_interests = findViewById(R.id.et_display_interests);
+        tv_display_birthDate = findViewById(R.id.tv_display_birthday);
 
-        tv_display_birthDate = findViewById(R.id.tv_display_birthDate);
-        tv_display_birthTime = findViewById(R.id.tv_display_birthTime);
-
-
+        btn_signOut = findViewById(R.id.btn_signOut);
+        btn_signOut.setOnClickListener(v -> {
+            mAuth.signOut();
+            finish();
+        });
+        btn_back = findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(v -> {
+            finish();
+            Log.d("GET_USER_ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        });
     }
 
-    private void showUserDetails() {
+    private void showUserDetails(UserProfile userProfile) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser == null) {
             Toast.makeText(this, "User is not logged in.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        et_display_email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        tv_display_email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         if(userProfile == null) {
             Toast.makeText(this, "Profile is not set up yet.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        et_display_username.setText(userProfile.getUsername());
-        et_display_phone.setText(userProfile.getPhoneNumber());
-        et_display_province.setText(userProfile.getProvince());
-        et_display_gender.setText(userProfile.getGender());
-        et_display_interests.setText(userProfile.getInterests());
+
+        tv_display_username.setText(userProfile.getUsername());
+        tv_display_phone.setText(currentUser.getPhoneNumber());
+        tv_display_province.setText(userProfile.getProvince());
+        tv_display_gender.setText(userProfile.getGender());
+        tv_display_interests.setText(userProfile.getInterests());
 
         tv_display_birthDate.setText(userProfile.getBirthDate());
-        tv_display_birthTime.setText(userProfile.getBirthTime());
     }
 }

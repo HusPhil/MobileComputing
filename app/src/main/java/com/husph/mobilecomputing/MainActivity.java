@@ -63,10 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private SignInAccount oneTapClient;
 
     RecyclerView rv_card_grid;
-    MaterialToolbar tb_mainAct;
-    ImageButton btn_launchBluetooth;
 
-    private String selectedWord = "Helko World".trim().replaceAll("\\s", "").toUpperCase();
+    private String selectedWord = "Hello World".trim().replaceAll("\\s", "").toUpperCase();
     private FlipCardManager flipCardManager;
     private List<LetterCard> letterCards;
 
@@ -173,12 +171,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                         String toolBarTitle = "Welcome back, " + userProfile.getUsername() + "!";
-                        tb_mainAct.setTitle(toolBarTitle);
                     }
                 } catch (Exception e) {
                     Log.e("Firebase Error: MainAct", e.toString());
                     String toolBarTitle = "Welcome back!";
-                    tb_mainAct.setTitle(toolBarTitle);
                     Toast.makeText(MainActivity.this, "An error occurred while loading data", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -192,23 +188,8 @@ public class MainActivity extends AppCompatActivity {
         gson = new Gson();
         flipCardManager = new FlipCardManager(selectedWord);
 
-        tb_mainAct = findViewById((R.id.tb_mainAct));
-        setSupportActionBar(tb_mainAct);
 
-        tb_mainAct.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tbNavigation_OnClickEvent();
-            }
-        });
 
-//        btn_launchBluetooth = findViewById(R.id.btn_launchBluetooth);
-//        btn_launchBluetooth.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                btn_launchBluetooth_OnClickEvent();
-//            }
-//        });
 
     }
 

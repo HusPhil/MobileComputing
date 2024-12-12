@@ -702,9 +702,6 @@ public class BluetoothActivity extends AppCompatActivity {
             outputStream = tmpOutputStream;
         }
 
-        public void setTotalExpectedBytes(long totalExpectedBytes) {
-            this.totalExpectedBytes = totalExpectedBytes;
-        }
 
         public void run() {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
