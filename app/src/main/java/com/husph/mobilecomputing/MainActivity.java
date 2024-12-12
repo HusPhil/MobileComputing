@@ -157,28 +157,6 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser == null) return;
 
         String userId = currentUser.getUid();
-        usersRef.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-
-                try {
-                    if (!task.isSuccessful()) {
-                        Log.e("firebase", "Error getting data", task.getException());
-                    }
-                    else {
-                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                        userProfile = task.getResult().getValue(UserProfile.class);
-
-
-                        String toolBarTitle = "Welcome back, " + userProfile.getUsername() + "!";
-                    }
-                } catch (Exception e) {
-                    Log.e("Firebase Error: MainAct", e.toString());
-                    String toolBarTitle = "Welcome back!";
-                    Toast.makeText(MainActivity.this, "An error occurred while loading data", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     private void InitializeComponents() {
@@ -187,10 +165,6 @@ public class MainActivity extends AppCompatActivity {
         usersRef = firebaseDatabase.getReference("users");
         gson = new Gson();
         flipCardManager = new FlipCardManager(selectedWord);
-
-
-
-
     }
 
     private void setupCardGrid() {

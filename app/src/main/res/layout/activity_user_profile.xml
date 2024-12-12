@@ -36,26 +36,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:padding="@dimen/padding_small"
-                        android:text="User Profile"
-                        android:textAlignment="center"
-                        android:textColor="@color/darkblue"
-                        android:textSize="@dimen/fs_primary_200" />
-
                     <ImageView
                         android:id="@+id/circularImageView"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                        android:layout_marginTop="@dimen/dps_primary_200"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="center"
                         android:scaleType="centerCrop"
+                        android:clipToOutline="true"
                         android:backgroundTint="@color/darkblue"
                         android:src="@drawable/ic_launcher_foreground"
                         android:background="@drawable/circle_shape" />
-
                     <TextView
                         android:id="@+id/tv_display_username"
                         android:layout_width="match_parent"
@@ -70,7 +61,6 @@
                         android:id="@+id/tv_display_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/poppins"
                         android:text="husphil200@gmail.com"
@@ -94,6 +84,7 @@
 
             <!-- Phone Number Card -->
             <androidx.cardview.widget.CardView
+                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dps_primary_200"
                 android:layout_marginRight="@dimen/dps_primary_200"
                 android:layout_width="match_parent"
@@ -114,6 +105,7 @@
                         android:src="@drawable/ic_phone" />
 
                     <TextView
+                        android:layout_gravity="center"
                         android:id="@+id/tv_display_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -137,6 +129,7 @@
 
             <!-- Province Card -->
             <androidx.cardview.widget.CardView
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_small"
@@ -157,6 +150,7 @@
                         android:src="@drawable/ic_location" />
 
                     <TextView
+                        android:layout_gravity="center"
                         android:id="@+id/tv_display_province"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -193,12 +187,14 @@
                     android:padding="@dimen/padding_small">
 
                     <ImageView
+                        android:id="@+id/iv_genderIcon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/ic_gender_female" />
 
                     <TextView
+                        android:layout_gravity="center"
                         android:id="@+id/tv_display_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -241,6 +237,7 @@
                         android:src="@drawable/ic_interests" />
 
                     <TextView
+                        android:layout_gravity="center"
                         android:id="@+id/tv_display_interests"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -277,13 +274,6 @@
                     android:orientation="vertical"
                     android:padding="@dimen/padding_small">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Birthday"
-                        android:textColor="@color/darkblue"
-                        android:textSize="@dimen/fs_secondary_100" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -297,6 +287,7 @@
                             android:src="@drawable/ic_birthday" />
 
                         <TextView
+                            android:layout_gravity="center"
                             android:id="@+id/tv_display_birthday"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

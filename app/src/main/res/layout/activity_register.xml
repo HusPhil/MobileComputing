@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            app:tint="@color/darkblue"
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -61,7 +62,9 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        app:boxStrokeColor="@color/darkblue"
+                        app:hintTextColor="@color/darkblue">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_email_register"
@@ -70,6 +73,7 @@
                             android:inputType="textEmailAddress"
                             android:textSize="@dimen/fs_secondary_100"
                             android:fontFamily="@font/poppins"
+                            android:foregroundTint="@color/darkblue"
                             android:hint="Email" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +94,9 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/darkblue"
+                            app:hintTextColor="@color/darkblue">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_password_register"
                                 android:layout_width="match_parent"
@@ -104,6 +110,8 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/darkblue"
+                            app:hintTextColor="@color/darkblue"
                             android:layout_marginTop="@dimen/dps_primary_200">
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_confirm_password_register"
@@ -120,6 +128,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <Button
+                    android:backgroundTint="@color/darkblue"
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -47,6 +47,7 @@
                 android:text="Bluetooth" />
 
             <Button
+                android:backgroundTint="@color/darkblue"
                 android:id="@+id/btn_discoverDevices"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,12 +55,24 @@
                 android:text="Discover Devices"
                 android:textSize="@dimen/fs_secondary_200" />
 
-
-            <ListView
-                android:id="@+id/lv_pairedDevices"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="@dimen/padding_medium" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dps_primary_100"
+                app:cardCornerRadius="12dp"
+                android:layout_marginLeft="@dimen/dps_primary_100"
+                android:layout_marginRight="@dimen/dps_primary_100"
+                app:cardElevation="4dp">
+
+                <ListView
+                    android:id="@+id/lv_pairedDevices"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_margin="@dimen/padding_medium" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+
 
 
             <View
@@ -83,12 +96,14 @@
 
 
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dps_primary_200"
                 android:layout_marginLeft="@dimen/padding_large"
                 android:layout_marginRight="@dimen/padding_large"
                 app:contentPadding="@dimen/padding_small"
+                app:cardElevation="4dp"
                 app:cardCornerRadius="@dimen/padding_small">
 
                 <LinearLayout
@@ -105,7 +120,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="No File in Tranfer.."
+                            android:text="No File in Transfer.."
                             android:textAlignment="center"
                             android:textSize="@dimen/fs_secondary_100" />
 
@@ -119,26 +134,30 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_medium"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:padding="@dimen/padding_medium">
 
                 <Button
+                    android:backgroundTint="@color/darkblue"
                     android:id="@+id/btn_sendFile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Send File"
+                    android:layout_marginRight="@dimen/dps_primary_200"
                     android:textSize="@dimen/fs_secondary_200" />
 
                 <Button
+                    android:backgroundTint="@color/darkblue"
                     android:id="@+id/btn_receiveFile"
                     android:layout_width="match_parent"
+                    android:layout_marginLeft="@dimen/dps_primary_200"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Receive File"
@@ -152,6 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
+                android:textColor="@color/darkblue"
                 android:text="Learn more about bluetooth here!"
                 android:textAlignment="center"
                 android:textSize="@dimen/fs_secondary_100" />

@@ -7,6 +7,7 @@ public class UserProfile {
     private String birthDate;
     private String birthTime;
     private String gender;
+    private String interests;
 
     public String getGender() {
         return gender;
@@ -65,28 +66,26 @@ public class UserProfile {
         this.username = username;
     }
 
-    private String interests;
-
     public UserProfile() {
     }
 
-    public UserProfile(
-            String username,
-            String phoneNumber,
-            String province,
-            String birthDate,
-            String birthTime,
-            String interests,
-            String gender
-    ) {
-        this.username = username;
-        this.phoneNumber = phoneNumber;
-        this.province = phoneNumber;
-        this.birthDate = birthDate;
-        this.birthTime = birthTime;
-        this.gender = gender;
-        this.interests = interests;
-    }
+//    public UserProfile(
+//            String username,
+//            String phoneNumber,
+//            String province,
+//            String birthDate,
+//            String birthTime,
+//            String interests,
+//            String gender
+//    ) {
+//        this.username = username;
+//        this.phoneNumber = phoneNumber;
+//        this.province = phoneNumber;
+//        this.birthDate = birthDate;
+//        this.birthTime = birthTime;
+//        this.gender = gender;
+//        this.interests = interests;
+//    }
 
 
 }

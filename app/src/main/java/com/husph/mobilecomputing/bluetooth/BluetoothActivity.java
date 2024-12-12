@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.OpenableColumns;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -120,6 +121,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
         tv_bluetoothStatus = findViewById(R.id.tv_bluetoothStatus);
         tv_aboutBluetooth = findViewById(R.id.tv_aboutBluetooth);
+        tv_aboutBluetooth.setText(Html.fromHtml("<u>Learn more about Bluetooth here!</u>"));
         tv_aboutBluetooth.setOnClickListener(v-> {
             Intent openBluetoothActivity = new Intent(this, BluetoothStudyActivity.class);
             startActivity(openBluetoothActivity);

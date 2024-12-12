@@ -21,6 +21,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
+        android:backgroundTint="@color/darkblue"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_marginTop="@dimen/padding_medium"

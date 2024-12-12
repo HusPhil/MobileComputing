@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,8 +76,12 @@ public class UserProfileActivity extends AppCompatActivity {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    UserProfile userProfile = task.getResult().getValue(UserProfile.class);
-                    showUserDetails(userProfile);
+                    try {
+                        UserProfile userProfile = task.getResult().getValue(UserProfile.class);
+                        showUserDetails(userProfile);
+                    } catch (Exception e) {
+                        Log.e("FIREBASE_READ_ERR", e.getMessage());
+                    }
                 }
             }
         });
@@ -115,11 +121,23 @@ public class UserProfileActivity extends AppCompatActivity {
             return;
         }
 
+        Glide.with(this).load(currentUser.getPhotoUrl()).into((ImageView) findViewById(R.id.circularImageView));
+
 
         tv_display_username.setText(userProfile.getUsername());
-        tv_display_phone.setText(currentUser.getPhoneNumber());
+        tv_display_phone.setText(userProfile.getPhoneNumber());
         tv_display_province.setText(userProfile.getProvince());
         tv_display_gender.setText(userProfile.getGender());
+
+        if(userProfile.getGender().equals("Male")) {
+            ImageView iv_genderIcon = findViewById(R.id.iv_genderIcon);
+            iv_genderIcon.setImageResource(R.drawable.ic_gender_male);
+        }
+        else {
+            ImageView iv_genderIcon = findViewById(R.id.iv_genderIcon);
+            iv_genderIcon.setImageResource(R.drawable.ic_gender_female);
+        }
+
         tv_display_interests.setText(userProfile.getInterests());
 
         tv_display_birthDate.setText(userProfile.getBirthDate());

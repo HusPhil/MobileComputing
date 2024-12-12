@@ -12,6 +12,7 @@
         android:layout_marginTop="@dimen/padding_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/darkblue"
         android:fontFamily="@font/poppins_semibold"
         android:text="Learning about Infrared!"
         android:textAlignment="center"
@@ -87,12 +88,13 @@
                                 android:id="@+id/vwc_whatIsInfrared"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -145,12 +147,13 @@
                                 android:id="@+id/vwc_applications"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -203,12 +206,13 @@
                                 android:id="@+id/vwc_advantages"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -262,12 +266,13 @@
                                 android:id="@+id/vwc_limitations"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -319,12 +324,13 @@
                                 android:id="@+id/vwc_types"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -377,12 +383,13 @@
                                 android:id="@+id/vwc_working"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -435,12 +442,13 @@
                                 android:id="@+id/vwc_safety"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -493,12 +501,13 @@
                                 android:id="@+id/vwc_history"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
@@ -549,12 +558,13 @@
                                 android:id="@+id/vwc_future"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:backgroundTint="@color/black"
+                                android:backgroundTint="@color/darkblue"
                                 android:background="@drawable/ic_arrow_right"/>
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:textColor="@color/darkblue"
                             android:layout_marginLeft="@dimen/padding_small"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_semibold"
